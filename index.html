@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Login</title>
+    <link href="css/login.css" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-area">
+            <img src="images/logo_gesotec.png" alt="Logo GESOTEC" class="logo-img"> <span class="logo-name">GESOTEC</span>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-outline">Sign Up</button>
+            <button class="btn-filled">Login</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="card">
+            <h1 class="title">Iniciar sesión</h1>
+            <p class="subtitle">Inicia sesión ingresando tu correo y contraseña.
+            </p>
+
+            <form id="loginform" class="form">
+                <div class="field">
+                    <label>Correo</label>
+                    <input type="email" id="userEmail" placeholder="Ingresa su correo" required>
+                </div>
+
+                <div class="field">
+                    <label>Contraseña</label>
+                    <div class="pass-group">
+                        <input type="password" id="userPass" required placeholder="********">
+                        <span id="eyeBtn" class="eye-icon">👁</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Iniciar sesión</button>
+                <a href="#" class="link-text">Olvido su contraseña</a>
+            </form>
+        </div>
+    </main>
+    
+    <script src="js/login.js"></script>
+</body>
+</html>

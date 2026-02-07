@@ -1,0 +1,120 @@
+/*Reset general*/
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'sans-serif';
+}
+
+body {
+    background-color: #f1f1f1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Navbar con tamaño fijo*/
+.navbar {
+    background-color: #1976d2;
+    height: 80px /*Altura fija que no cambiará*/;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    color: white;
+    position: relative; /*Necesario para que el logo se base en esta barra*/
+    z-index: 10; /*Asegura que la barra esté por encima del fondo*/
+}
+
+/*Logo que sobresale*/
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    height: 100%; /*Ocupa la altura de la navbar para centrar el texto*/
+}
+
+.logo-img {
+    height: 150px; /*El logo es más grande que los 70px de la barra*/
+    width: auto;
+    position: absolute; /*Lo sacamos del flujo normal*/
+    top: -30px; /*Sobra 30px por encima de la navbar*/
+    left: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.25));/*Sombra para que resalte*/
+}
+
+.logo-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-left: 120px; /*Deja espacio para el logo*/
+}
+
+.nav-actions { display: flex; gap: 10px;}
+
+.btn-outline, .btn-filled {
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border: 1px solid #ffffff;
+}
+
+.btn-outline { background: #90caf9; color: #1976d2;}
+.btn-filled {background: #1565c0; color: white; border: none;}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border: 4px solid #1976d2;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.field {text-align: left; margin-bottom: 20px;}
+.field label {display: block; font-weight: bold; margin-bottom: 8px;}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #000;
+    font-size: 1rem;
+}
+
+.pass-group { position: relative; display: flex; align-items: center; }
+.eye-icon { position: absolute; right: 10px; cursor: pointer; }
+
+.submit-btn {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.link-text {
+    display: block;
+    margin-top: 20px;
+    color: black;
+    text-decoration: underline;
+}
+
+/*Responsivo*/
+@media (max-width: 600px) {
+    .logo-img { height: 80px; } /*Lo achicamos un poco en móvil*/
+    .og-name { margin-left: 90px; font-size: 1.3rem; }
+    .navbar { height: 60px; }
+}
