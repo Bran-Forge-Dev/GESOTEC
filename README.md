@@ -1,6 +1,6 @@
 # GESOTEC - Sistema de Gestión de Soporte Tecnologíco
 
-**Gesotec** es una plataforma web de Help Desk enfocada en facilitar la comunicación y resolución de problemas técnicos dentro de una organización.
+**GESOTEC** es una plataforma web de Help Desk enfocada en facilitar la comunicación y resolución de problemas técnicos dentro de una organización.
 
 ## 👥 Roles del Sistema
 - **Administrador:**  Control de inventarios, reportes y gestión de personal.
