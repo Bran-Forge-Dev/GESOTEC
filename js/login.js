@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ) {
 
             alert("Acceso correcto. Redirigiendo...");
-            window.location.href = "html/PerfilAdmin.html";
+            window.location.href = "gesote/html/PerfilAdmin.html";
 
         } else {
             alert("Credenciales incorrectas. Inténtalo de nuevo.");
