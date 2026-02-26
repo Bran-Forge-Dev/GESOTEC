@@ -33,9 +33,11 @@ justify-content:center;
 align-items:center;
 }
 
+/* Imagen de gesotec */
 .sidebar-top img{
-max-width:150px;
-height:auto;
+margin-top:20px;
+width:150px;
+height:190px;
 }
 
 .menu{

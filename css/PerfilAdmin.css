@@ -205,5 +205,5 @@ background:rgba(255,255,255,0.1);
 
 /* ACTIVO (solo cuando tenga active) */
 .menu-item.active{
-background:#1f2a35; /* oscuro */
+background:#2f3f4f; /* oscuro */
 }
