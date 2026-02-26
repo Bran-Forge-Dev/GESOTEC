@@ -68,7 +68,7 @@ background:#2f73c0;
 color:white;
 font-size:32px;
 font-weight:600;
-height:90px;
+height:100px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -183,4 +183,27 @@ width:auto;
 background:#e7e0a4;
 grid-column:1/2;
 margin-top:10px;
+}
+
+/* ================= MENU ITEM ================= */
+.menu-item{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:16px;
+padding:12px 15px;
+border-radius:6px;
+text-decoration:none;
+color:white;
+transition:0.2s ease;
+}
+
+/* Hover */
+.menu-item:hover{
+background:rgba(255,255,255,0.1);
+}
+
+/* ACTIVO (solo cuando tenga active) */
+.menu-item.active{
+background:#1f2a35; /* oscuro */
 }
