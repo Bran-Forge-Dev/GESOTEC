@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Perfil Técnico</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/TecVerPerfil.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="TecPerfil.html" class="nav-item">🏠 Panel de Control</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Técnico de Soporte</p>
+                            <a href="TecVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="profile-container">
+                    <h2 class="page-title">Perfil de Usuario</h2>
+                    <p class="page-subtitle">Gestiona tu información personal y preferencias de cuenta</p>
+
+                    <section class="profile-header-card">
+                        <div class="profile-main-info">
+                            <div class="profile-avatar-large">👤</div>
+                            <div class="profile-text-info">
+                                <h3 id="displayNombre">Alejandro Rodríguez</h3>
+                                <p>Técnico de Soporte | 💼 Departamento de IT</p>
+                                <p>🕒 Turno (<span id="displayTurno">8:00 - 16:00</span>)</p>
+                            </div>
+                        </div>
+                        <button class="btn-edit-profile" id="openEditModal">Editar Información de la Cuenta</button>
+                    </section>
+
+                    <div class="profile-grid">
+                        <div class="left-column">
+                            <section class="info-card">
+                                <h3>📊 Historial de Tickets</h3>
+                                <div class="info-row">
+                                    <span>✉️</span>
+                                    <div>
+                                        <label>Correo Electrónico</label>
+                                        <p>a.rodriguez@gesotec.com</p>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <span>📞</span>
+                                    <div>
+                                        <label>Teléfono móvil</label>
+                                        <p id="displayTelefono">+55 8753241710</p>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <span>🪪</span>
+                                    <div>
+                                        <label>ID de Empleado</label>
+                                        <p>TEC-8821</p>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <span>📅</span>
+                                    <div>
+                                        <label>Fecha de Ingreso</label>
+                                        <p>12 Enero, 2023</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="skills-card">
+                                <h3>🎓 TEC-8821</h3>
+                                <div class="skills-grid">
+                                    <span class="skill-badge">Redes Cisco</span>
+                                    <span class="skill-badge">Hardware</span>
+                                    <span class="skill-badge">Windows Server</span>
+                                    <span class="skill-badge">Soporte Técnico</span>
+                                    <span class="skill-badge">Ciberseguridad</span>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="right-column">
+                            <div class="stats-row">
+                                <div class="stat-box">
+                                    <span class="stat-icon-blue">✔️</span>
+                                    <h4>1,248</h4>
+                                    <p>Tickets Resueltos</p>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-icon-gold">⭐</span>
+                                    <h4>4.9/5</h4>
+                                    <p>Calificación Cliente</p>
+                                </div>
+                            </div>
+
+                            <section class="activities-card">
+                                <div class="activities-header">
+                                    <span>🕒 Actividades Recientes</span>
+                                    <a href="HistorialTecnico.html">Ver todo el historial</a>
+                                </div>
+                                <div class="activity-list">
+                                    <div class="activity-item">
+                                        <span class="check-icon">✔️</span>
+                                        <p>Resolvió exitosamente <strong>#TK-8810: Instalación de Office 365</strong> <br> <small>Hace 25 minutos</small></p>
+                                    </div>
+                                    <div class="activity-item">
+                                        <span class="check-icon">✔️</span>
+                                        <p>Resolvió exitosamente <strong>#TK-8804: Error de conexión VPN</strong> <br> <small>Hace 2 horas</small></p>
+                                    </div>
+                                    <div class="activity-item">
+                                        <span class="check-icon">✔️</span>
+                                        <p>Resolvió exitosamente <strong>#TK-8804: Error de conexión VPN</strong> <br> <small>Hace 3 horas</small></p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Información de la Cuenta</h3>
+                <span id="closeModal" class="close-x">×</span>
+            </div>
+            <form id="editForm" class="modal-body">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="inputNombre" value="Alejandro Rodríguez">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono móvil</label>
+                    <input type="text" id="inputTelefono" value="+55 8753241710">
+                </div>
+                <div class="form-group">
+                    <label>Turno</label>
+                    <select id="inputTurno">
+                        <option value="8:00 - 16:00">8:00 - 16:00</option>
+                        <option value="16:00 - 00:00">16:00 - 00:00</option>
+                        <option value="00:00 - 8:00">00:00 - 8:00</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelBtn" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/TecVerPerfil.js"></script>
+</body>
+</html>
