@@ -1,0 +1,115 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Añadir Nuevo Usuario</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/adminNuevoUsuario.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="adminDashboard.html" class="nav-item">
+                        🏠 Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Administrador</p>
+                            <a href="adminPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="form-container-white">
+                    
+                    <header class="form-header">
+                        <a href="adminGestionUsuarios.html" class="btn-back">←</a>
+                        <div class="header-text">
+                            <h2>Añadir Nuevo Usuario</h2>
+                            <p>Complete el formulario para registrar un nuevo usuario en el sistema</p>
+                        </div>
+                    </header>
+
+                    <form id="newUserForm" class="register-form">
+                        
+                        <div class="input-group">
+                            <label>Nombre Completo</label>
+                            <div class="input-with-icon">
+                                <span class="inner-icon">👤</span>
+                                <input type="text" id="userName" placeholder="Ingresa nombre completo" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Correo Electrónico</label>
+                            <div class="input-with-icon">
+                                <span class="inner-icon">✉️</span>
+                                <input type="email" id="userEmail" placeholder="Ingresa el correo electrónico" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Rol de Usuario</label>
+                            <div class="input-with-icon">
+                                <span class="inner-icon">🪪</span>
+                                <select id="userRole" required>
+                                    <option value="" disabled selected>Seleccionar rol</option>
+                                    <option value="usuario">Usuario Final</option>
+                                    <option value="tecnico">Agente técnico</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                            <small class="helper-text">Define los permisos de acceso de la plataforma</small>
+                        </div>
+
+                        <div class="password-grid">
+                            <div class="input-group">
+                                <label>Contraseña</label>
+                                <div class="input-with-icon">
+                                    <span class="inner-icon">🔒</span>
+                                    <input type="password" id="userPass" placeholder="***********" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Confirmar Contraseña</label>
+                                <div class="input-with-icon">
+                                    <span class="inner-icon">🔄</span>
+                                    <input type="password" id="userPassConfirm" placeholder="***********" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <footer class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="window.location.href='adminGestionUsuarios.html'">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn-save">
+                                <span class="save-icon">💾</span> Guardar Usuario
+                            </button>
+                        </footer>
+
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/adminNuevoUsuario.js"></script>
+</body>
+</html>
