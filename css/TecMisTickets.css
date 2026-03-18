@@ -1,0 +1,104 @@
+/* CONTENEDOR PRINCIPAL BLANCO */
+.tickets-container-box {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    min-height: 85vh;
+}
+
+.page-title {
+    font-size: 20px;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* BARRA DE FILTROS */
+.filters-bar {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+    align-items: flex-end;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.filter-item label {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.filter-item select {
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.btn-filter-action {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 60px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* TABLA */
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tickets-table th {
+    background-color: #e0e0e0;
+    padding: 15px;
+    font-size: 13px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.tickets-table td {
+    padding: 20px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    text-align: center;
+}
+
+.link-details {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-details:hover {
+    text-decoration: underline;
+}
+
+/* PAGINACIÓN */
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 13px;
+}
+
+.pagination-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-pag {
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    padding: 6px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Mis Tickets Asignados</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/TecMisTickets.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="TecPerfil.html" class="nav-item active">
+                        <div class="grid-icon">
+                            <div></div><div></div><div></div><div></div>
+                        </div>
+                        Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Técnico de Soporte</p>
+                            <a href="TecVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="tickets-container-box">
+                    <h2 class="page-title">Mis Tickets Asignados</h2>
+
+                    <section class="filters-bar">
+                        <div class="filter-item">
+                            <label>Filtrar por Estado</label>
+                            <select id="filterEstado">
+                                <option value="Todos">Todos</option>
+                                <option value="Abierto">Abierto</option>
+                                <option value="En Progreso">En Progreso</option>
+                                <option value="Cerrado">Cerrado</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>Filtrar por Prioridad</label>
+                            <select id="filterPrioridad">
+                                <option value="Todas">Todas</option>
+                                <option value="Urgente">Urgente</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
+                        </div>
+                        <button class="btn-filter-action" id="btnFiltrar">Filtrar</button>
+                    </section>
+
+                    <div class="table-responsive">
+                        <table class="tickets-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ASUNTO</th>
+                                    <th>USUARIO</th>
+                                    <th>PRIORIDAD</th>
+                                    <th>ESTADO</th>
+                                    <th>FECHA CREACIÓN</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr data-estado="Abierto" data-prioridad="Urgente">
+                                    <td>#7896</td>
+                                    <td>Problema con la impresora</td>
+                                    <td>Ana Torres</td>
+                                    <td>Urgente</td>
+                                    <td>Abierto</td>
+                                    <td>2023-10-27</td>
+                                    <td><a href="DetalleTicket.html?id=7896" class="link-details">Ver Detalles</a></td>
+                                </tr>
+                                <tr data-estado="En Progreso" data-prioridad="Alta">
+                                    <td>#7895</td>
+                                    <td>No puedo acceder al sistema</td>
+                                    <td>Carlos Ruiz</td>
+                                    <td>Alta</td>
+                                    <td>En Progreso</td>
+                                    <td>2023-10-26</td>
+                                    <td><a href="DetalleTicket.html?id=7895" class="link-details">Ver Detalles</a></td>
+                                </tr>
+                                <tr data-estado="Abierto" data-prioridad="Media">
+                                    <td>#7894</td>
+                                    <td>Software desactualizado</td>
+                                    <td>Elena Gómez</td>
+                                    <td>Media</td>
+                                    <td>Abierto</td>
+                                    <td>2023-10-26</td>
+                                    <td><a href="DetalleTicket.html?id=7894" class="link-details">Ver Detalles</a></td>
+                                </tr>
+                                <tr data-estado="Cerrado" data-prioridad="Baja">
+                                    <td>#7893</td>
+                                    <td>Solicitud de nuevo mouse</td>
+                                    <td>Pedro Jiménez</td>
+                                    <td>Baja</td>
+                                    <td>Cerrado</td>
+                                    <td>2023-10-25</td>
+                                    <td><a href="DetalleTicket.html?id=7893" class="link-details">Ver Detalles</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <footer class="table-footer">
+                        <p>Mostrar 1 a 4 de 4 resultados</p>
+                        <div class="pagination-btns">
+                            <button class="btn-pag">Anterior</button>
+                            <button class="btn-pag">Siguiente</button>
+                        </div>
+                    </footer>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/TecMisTickets.js"></script>
+</body>
+</html>
