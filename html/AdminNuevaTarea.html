@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Nueva Tarea</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminNuevaTarea.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item">🏠 Panel de Control</a>
+                    <a href="AdminTableroTareas.html" class="nav-item active">📋 Tareas</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Administrador</p>
+                            <a href="AdminPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <p class="top-desc">Administrar el flujo de trabajo de tu equipo de soporte.</p>
+                
+                <div class="form-card">
+                    <header class="form-card-header">
+                        <h2><span class="icon-header">📋+</span> Tablero de Tareas</h2>
+                        <p>Complete los detalles para crear una nueva tarea de soporte.</p>
+                    </header>
+
+                    <form id="formNuevaTarea" class="task-form">
+                        <div class="form-group full-width">
+                            <label>Nombre de la tarea</label>
+                            <div class="input-container">
+                                <span class="input-icon">✎</span>
+                                <input type="text" placeholder="Ej.: Actualización de drivers impresora HP" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select>
+                                    <option value="hardware">Hardware</option>
+                                    <option value="software">Software</option>
+                                    <option value="redes">Redes</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Prioridad</label>
+                                <div class="priority-options">
+                                    <label class="radio-label">
+                                        <input type="radio" name="prio" value="baja"> <span class="dot baja"></span> Baja
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="prio" value="media" checked> <span class="dot media"></span> Media
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="prio" value="alta"> <span class="dot alta"></span> Alta
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Descripción Detallada</label>
+                            <textarea placeholder="Describe el problema o la tarea a realizar con el mayor detalle posible..."></textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Asignar Técnico</label>
+                            <div class="input-container">
+                                <span class="input-icon">👤+</span>
+                                <input type="text" placeholder="Buscar técnico...">
+                            </div>
+                        </div>
+
+                        <div class="upload-area" id="dropzone">
+                            <div class="upload-content">
+                                <span class="upload-icon">☁️</span>
+                                <p><a href="#">Subir un archivo</a> o arrastrar y soltar</p>
+                                <span>PNG, JPG, PDF hasta 10MB</span>
+                            </div>
+                        </div>
+
+                        <footer class="form-footer">
+                            <button type="button" class="btn-cancel" onclick="window.location.href='adminTableroTareas.html'">Cancelar</button>
+                            <button type="submit" class="btn-save">Guardar Tarea</button>
+                        </footer>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/AdminNuevaTarea.js"></script>
+</body>
+</html>
