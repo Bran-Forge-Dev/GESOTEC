@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Panel Administrador</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminPerfil.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item active">
+                        <span class="nav-icon">📊</span> Panel de Control
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="admin-main-container">
+                    
+                    <section class="admin-top-header">
+                        <div class="admin-user-info">
+                            <div class="avatar-circle">👤</div>
+                            <h2>Administrador</h2>
+                            <div class="info-details-box">
+                                <p><strong>Nombre:</strong> Brandon Salinas</p>
+                                <p><strong>Correo:</strong> brandon.salinas@gesotec.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-logout-control">
+                            <div class="gear-icon">⚙️</div>
+                            <select id="btnLogoutSelect" class="logout-dropdown">
+                                <option value="" disabled selected>Cerrar sesion</option>
+                                <option value="logout">Cerrar sesion</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <h3 class="panel-subtitle">Panel de gestión y configuración</h3>
+
+                    <div class="admin-cards-flex">
+                        <a href="AdminGestionUsuarios.html" class="admin-card card-blue">
+                            <div class="card-header">
+                                <h4>Gestión de Usuarios</h4>
+                                <span class="card-icon">👤</span>
+                            </div>
+                            <p>Administrar técnicos y usuarios del sistema. Asigna roles y gestiona accesos.</p>
+                        </a>
+
+                        <a href="AdminTicketsAsignados.html" class="admin-card card-gray">
+                            <div class="card-header">
+                                <h4>Tickets Asignados</h4>
+                                <span class="card-icon">📖</span>
+                            </div>
+                            <p>Consulta el registro completo de tickets cerrados y su resolución</p>
+                        </a>
+
+                        <a href="AdminTableroTareas.html" class="admin-card card-purple">
+                            <div class="card-header">
+                                <h4>Gestión de Tareas</h4>
+                                <span class="card-icon">📊</span>
+                            </div>
+                            <p>Supervisa todos los casos, aplicar filtros y revisar los técnicos asignados.</p>
+                        </a>
+
+                        <a href="AdminHistorialTickets.html" class="admin-card card-yellow">
+                            <div class="card-header">
+                                <h4>Historial de Tickets</h4>
+                                <span class="card-icon">🕒</span>
+                            </div>
+                            <p>Consulta el historial completo de tickets cerrados.</p>
+                        </a>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/AdminPerfil.js"></script>
+</body>
+</html>
