@@ -1,0 +1,178 @@
+/* -- CSS para la barra de todas las páginas -- */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#dcdcdc;
+}
+
+/* ================= LAYOUT ================= */
+.layout{
+display:flex;
+min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+width:230px;
+background:#2f3f4f;
+display:flex;
+flex-direction:column;
+color:white;
+}
+
+.sidebar-top{
+background:#c5d3e0;
+height:100px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* Imagen de gesotec */
+.sidebar-top img{
+margin-top:20px;
+width:150px;
+height:190px;
+}
+
+.menu{
+padding:20px 25px;
+}
+
+.menu-item{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.menu-item.active{
+font-weight:bold;
+}
+
+.grid-icon{
+display:grid;
+grid-template-columns:repeat(2,8px);
+grid-gap:3px;
+}
+
+.grid-icon div{
+width:8px;
+height:8px;
+background:white;
+}
+
+/* ================= MAIN ================= */
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+/* ================= HEADER ================= */
+.header{
+background:#2e73b8;
+color:white;
+font-size:30px;
+font-weight:bold;
+text-align:center;
+padding:33px;
+}
+
+/* ================= CONTENT ================= */
+.content{
+flex:1;
+padding:40px;
+background:#e6e6e6;
+}
+
+/* ================= HEADER INTERNO ================= */
+.content-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:40px;
+}
+
+/* ================= BUSCADOR ================= */
+.search{
+display:flex;
+align-items:center;
+gap:8px;
+font-weight:bold;
+}
+
+/* ================= BOTÓN ================= */
+.btn-nuevo{
+background:#2e73b8;
+color:white;
+border:none;
+padding:10px 18px;
+font-weight:bold;
+cursor:pointer;
+display:flex;
+align-items:center;
+text-decoration:none;
+gap:8px;
+border-radius:4px;
+}
+
+.btn-nuevo:hover{
+background:#1c4f87;
+}
+
+/* ================= TABLA ================= */
+table{
+width:100%;
+border-collapse:collapse;
+background:#f0f0f0;
+}
+
+th{
+background:#cfcfcf;
+padding:15px;
+font-weight:bold;
+text-align:center;
+}
+
+td{
+padding:15px;
+text-align:center;
+border-top:1px solid #c0c0c0;
+}
+
+/* ================= ICONOS ================= */
+.acciones{
+display:flex;
+justify-content:center;
+gap:15px;
+}
+
+.material-icons{
+cursor:pointer;
+transition:0.2s;
+}
+
+.edit{
+color:#2e73b8;
+}
+
+.edit:hover{
+color:#1c4f87;
+transform:scale(1.2);
+}
+
+.delete{
+color:#d9534f;
+}
+
+.delete:hover{
+color:#a94442;
+transform:scale(1.2);
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Usuarios</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="../css/PerfilAdmin.css">
+<link rel="stylesheet" href="../css/AdminGestionUsuarios.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <img src="../images/icon_gesotec.png" alt="logo">
+        </div>
+
+        <div class="menu">
+            <!-- PANEL DE CONTROL COMO <a> -->
+            <a href="AdminPerfil.html" class="menu-item">
+                <div class="grid-icon">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+                Panel de Control
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="header">
+            Gestión de Soporte Tecnológico
+        </header>
+
+        <section class="content gestion-usuarios">
+
+            <div class="content-header">
+                <h2>Gestión de Usuarios</h2>
+
+                <div class="search">
+                    <span class="material-icons">search</span>
+                    Buscar usuario
+                </div>
+
+                <a href="AdminNuevoUsuario.html" class="btn-nuevo">
+                    <span class="material-icons">add</span>
+                    Nuevo usuario
+                </a>
+            </div>
+
+            <table class="tabla-usuarios">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Fecha Creación</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ana López</td>
+                        <td>ana.lopez@example.com</td>
+                        <td>Administrador</td>
+                        <td>2023-01-15</td>
+                        <td class="acciones">
+
+                            <!-- EDITAR (redirige) -->
+                            <a href="EditarUsuario.html" class="icon-btn edit">
+                                <span class="material-icons">edit</span>
+                            </a>
+
+                            <!-- ELIMINAR (confirmación) -->
+                            <a href="#" class="icon-btn delete" onclick="return confirmarEliminacion(this)">
+                                <span class="material-icons">delete</span>
+                            </a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+</div>
+
+<script src="../js/AdminGestionUsuarios.js"></script>
+
+</body>
+</html>
