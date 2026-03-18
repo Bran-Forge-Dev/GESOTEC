@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Perfil Técnico</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/TecPerfil.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="TecPerfil.html" class="nav-item active">
+                        <span class="grid-icon">
+                            <div></div><div></div><div></div><div></div>
+                        </span> 
+                        Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p class="role-label">Técnico</p>
+                            <a href="TecVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                
+                <section class="admin-info-section">
+                    <div class="info-header-flex">
+                        <div class="header-user-group">
+                            <div class="big-avatar">👤</div>
+                            <h2 class="role-name">Técnico</h2>
+                            <div class="data-display-box">
+                                <p><strong>Nombre:</strong> Alejandro Ruiz</p>
+                                <p><strong>Correo:</strong> alejandro.ruiz@gesotec.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="logout-group">
+                            <div class="gear-icon">⚙️</div>
+                            <select class="logout-select" onchange="if(this.value=='exit') window.location.href='../index.html'">
+                                <option value="">Cerrar sesión</option>
+                                <option value="exit">Salir</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <h3>Panel de gestión y configuración</h3>
+
+                <div class="cards-grid">
+                    
+                    <a href="TecMisTickets.html"class="card-item card-blue">
+                        <div class="card-top">
+                            <h4>Tickets Asignados</h4>
+                            <span class="card-icon">📇</span>
+                        </div>
+                        <p>Ver y gestionar los tickets que te han sido asignados.</p>
+                    </a>
+
+                    <a href="BaseConocimiento.html" class="card-item card-purple">
+                        <div class="card-top">
+                            <h4>Base de Conocimiento</h4>
+                            <span class="card-icon">📖</span>
+                        </div>
+                        <p>Acceder a artículos y guías para resolver problemas comunes.</p>
+                    </a>
+
+                    <a href="TecVerPerfil.html" class="card-item card-lavender">
+                        <div class="card-top">
+                            <h4>Ver Perfil</h4>
+                            <span class="card-icon">📊</span>
+                        </div>
+                        <p>Gestiona tu información personal y preferencias de cuenta.</p>
+                    </a>
+
+                    <a href="TecHistorialTickets.html" class="card-item card-yellow">
+                        <div class="card-top">
+                            <h4>Historial de Tickets</h4>
+                            <span class="card-icon">🕙</span>
+                        </div>
+                        <p>Consulta el historial completo de tickets cerrados.</p>
+                    </a>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+    <script src="../js/TecPerfil.js"></script>
+</html>
