@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Tablero de Tareas</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminTableroTareas.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item">🏠 Panel de Control</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p style="color: white; font-size: 14px; font-weight: bold; margin: 0;">Administrador</p>
+                            <a href="AdminPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                
+                <header class="kanban-header">
+                    <div>
+                        <h2 class="page-title">Tablero de Tareas</h2>
+                        <p class="page-subtitle">Administrar el flujo de trabajo de tu equipo de soporte.</p>
+                    </div>
+                    <button class="btn-primary" id="btnNuevaTarea">＋ Nueva Tarea</button>
+                </header>
+
+                <div class="kanban-board">
+                    
+                    <section class="kanban-column column-todo">
+                        <header class="column-header">
+                            <span class="status-dot red">●</span>
+                            <h3>Por Hacer</h3>
+                            <span class="task-count">2</span>
+                        </header>
+                        
+                        <div class="task-list">
+                            <article class="task-card">
+                                <span class="tag tag-alta">Alta Prioridad</span>
+                                <h4>Actualización de software</h4>
+                                <p>Actualizar sistema operativo de servidores principales a v2024.</p>
+                                <footer class="card-footer">
+                                    <span class="icon">📅 12 Oct</span>
+                                </footer>
+                            </article>
+                            
+                            <article class="task-card">
+                                <span class="tag tag-media">Media</span>
+                                <h4>Mantenimiento al servidor</h4>
+                                <p>Revisión rutinaria de logs y limpieza de temporales.</p>
+                                <footer class="card-footer">
+                                    <span class="icon">💬 2</span>
+                                </footer>
+                            </article>
+                        </div>
+                        <button class="btn-add-card">＋ Añadir tarjeta</button>
+                    </section>
+
+                    <section class="kanban-column column-progress">
+                        <header class="column-header">
+                            <span class="status-dot blue">●</span>
+                            <h3>Por Hacer</h3> <span class="task-count">1</span>
+                        </header>
+                        
+                        <div class="task-list">
+                            <article class="task-card">
+                                <span class="tag tag-baja">Baja</span>
+                                <h4>Mantenimiento a los equipos</h4>
+                                <p>Limpieza física y rendimiento de cableado en sala 2.</p>
+                                <footer class="card-footer">
+                                    <span class="icon">📎 3</span>
+                                </footer>
+                            </article>
+                        </div>
+                        <button class="btn-add-card">＋ Añadir tarjeta</button>
+                    </section>
+
+                    <section class="kanban-column column-done">
+                        <header class="column-header">
+                            <span class="status-dot green">●</span>
+                            <h3>Completadas</h3>
+                            <span class="task-count">3</span>
+                        </header>
+                        
+                        <div class="task-list">
+                            <article class="task-card done-card"><h4>Configurar red</h4></article>
+                            <article class="task-card done-card"><h4>Error en aplicación</h4></article>
+                            <article class="task-card done-card"><h4>Copia de seguridad</h4></article>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/AdminTableroTareas.js"></script>
+</body>
+</html>
