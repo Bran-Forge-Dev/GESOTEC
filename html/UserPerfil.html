@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Perfil Usuario</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/UserPerfil.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="UserPerfil.html" class="nav-item active">
+                        <span class="nav-icon">🏠</span> Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p class="role-label">Usuario</p>
+                            <a href="UserVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <section class="user-info-card">
+                    <div class="info-header">
+                        <div class="big-avatar">👤</div>
+                        <h2 class="role-name">Usuario</h2>
+                        <div class="data-display-box">
+                            <p><strong>Nombre:</strong> Juan Perez</p>
+                            <p><strong>Correo:</strong> juan.perez@gesotec.com</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="dashboard-grid">
+                    <div class="panel-box">
+                        <h3>Mis Ticket Activados</h3>
+                        <div class="ticket-row">
+                            <p>#1234 - Problema con la impresora</p>
+                            <span class="badge badge-green">Abierto</span>
+                        </div>
+                        <div class="ticket-row">
+                            <p>#1235 - No puedo acceder al sistema</p>
+                            <span class="badge badge-yellow">En Proceso</span>
+                        </div>
+                    </div>
+
+                    <div class="panel-box">
+                        <h3>Acciones Rápidos</h3>
+                        <a href="UserCrearTicket.html" class="btn-action btn-blue">Crear Nuevo Ticket</a>
+                        <a href="UserHistorialTickets.html" class="btn-action btn-gray">Ver Historial de Tickets</a>
+                        <a href="UserVerPerfil.html" class="btn-action btn-light-green">Ver Perfil</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+    <script src="../js/UserPerfil.js"></script>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Perfil de Usuario</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/UserVerPerfil.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="UserPerfil.html" class="nav-item">
+                        🏠 Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="avatar-footer-container">
+                            <div class="user-avatar">👤</div>
+                        </div>
+                        <div class="user-meta">
+                            <p>Usuario</p>
+                            <a href="UserVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content"> 
+                <div class="breadcrumb-header">
+                    <h2>Perfil de Usuario</h2>
+                    <p>Gestiona tu información personal y preferencias de cuenta</p>
+                </div>
+
+                <section class="profile-top-box">
+                    <div class="profile-main-info">
+                        <div class="big-avatar-black">👤</div>
+                        <div class="profile-titles">
+                            <h3>Mariana Salinas</h3>
+                            <p class="position">Diseñadora Gráfica</p>
+                            <p class="department">💼 Departamento de Marketing</p>
+                            <p class="shift">🕒 Turno (<span id="displayTurno">8:00 - 16:00</span>)</p>
+                        </div>
+                    </div>
+                    <button class="btn-blue-edit" id="openEditModal">Editar Información de la Cuenta</button>
+                </section>
+
+                <div class="profile-grid-container">
+                    <aside class="info-card">
+                        <h3>Información</h3>
+                        <div class="info-detail">
+                            <span class="info-ico">✉️</span>
+                            <div class="info-texts">
+                                <label>Correo Electrónico</label>
+                                <p>m.salinas@gesotec.com</p>
+                            </div>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-ico">📞</span>
+                            <div class="info-texts">
+                                <label>Teléfono móvil</label>
+                                <p id="displayTelefono">+55 6129845221</p>
+                            </div>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-ico">🕒</span>
+                            <div class="info-texts">
+                                <label>Turno de Trabajo</label>
+                                <p id="displayTurnoInfo">Mañana (8:00 - 16:00)</p>
+                            </div>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-ico">🪪</span>
+                            <div class="info-texts">
+                                <label>ID de Empleado</label>
+                                <p>TEC-8725</p>
+                            </div>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-ico">📅</span>
+                            <div class="info-texts">
+                                <label>Fecha de Ingreso</label>
+                                <p>05 Marzo, 2023</p>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="content-area">
+                        <div class="stats-row">
+                            <div class="stat-box">
+                                <div class="stat-head">Tickets Totales 📁</div>
+                                <div class="stat-val">12</div>
+                                <div class="stat-foot">+ 2 este mes</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-head">En Proceso 📋</div>
+                                <div class="stat-val">1</div>
+                                <div class="stat-foot">Tiempo est: 2h</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-head">Completados ✔️</div>
+                                <div class="stat-val">11</div>
+                            </div>
+                        </div>
+
+                        <div class="recent-requests-box">
+                            <div class="box-header">
+                                <span>🕒</span> Solicitudes Recientes
+                            </div>
+                            <div class="request-item">
+                                <div class="req-left">
+                                    <span class="req-ico red">📡</span>
+                                    <div class="req-texts">
+                                        <p class="req-name">Fallo de conexión VPN</p>
+                                        <p class="req-id">#TK-8804 <span class="badge badge-yellow">En Revisión</span></p>
+                                    </div>
+                                </div>
+                                <div class="req-time">Hace 2 horas</div>
+                            </div>
+                            <div class="request-item">
+                                <div class="req-left">
+                                    <span class="req-ico green">💻</span>
+                                    <div class="req-texts">
+                                        <p class="req-name">Solicitud de monitor adicional</p>
+                                        <p class="req-id">#TK-2042 <span class="badge badge-green">Resuelto</span></p>
+                                    </div>
+                                </div>
+                                <div class="req-time">Ayer</div>
+                            </div>
+                            <div class="view-history">
+                                <a href="UserHistorialTickets.html">Ver todo el historial</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-head">
+                <h3>Editar Información de la Cuenta</h3>
+                <span id="closeModal" style="cursor:pointer">×</span>
+            </div>
+            <form id="editForm" class="modal-body">
+                <div class="m-group">
+                    <label>Nombre</label>
+                    <input type="text" id="inputNombre" value="Mariana Salinas">
+                </div>
+                <div class="m-group">
+                    <label>Teléfono</label>
+                    <input type="text" id="inputTelefono" value="+55 6129845221">
+                </div>
+                <div class="m-group">
+                    <label>Turno de Trabajo</label>
+                    <select id="inputTurno">
+                        <option value="8:00 - 16:00" selected>Mañana (8:00 - 16:00)</option>
+                        <option value="16:00 - 00:00">Tarde (16:00 - 00:00)</option>
+                        <option value="00:00 - 8:00">Noche (00:00 - 8:00)</option>
+                    </select>
+                </div>
+                <div class="m-foot">
+                    <button type="button" id="cancelBtn" class="m-btn-sec">Cancelar</button>
+                    <button type="submit" class="m-btn-pri">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/UserVerPerfil.js"></script>
+</body>
+</html>
