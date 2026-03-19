@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             email: "admin@gesotec.com",
             pass: "admin123",
-            redirect: "html/PerfilAdmin.html"
+            redirect: "html/AdminPerfil.html"
         },
         {
             email: "tecnico@gesotec.com",
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             email: "cliente@gesotec.com",
             pass: "user123",
-            redirect: "html/PerfilUsuario.html"
+            redirect: "html/UserPerfil.html"
         }
     ];
 
