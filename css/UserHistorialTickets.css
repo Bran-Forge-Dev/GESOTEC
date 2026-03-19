@@ -1,0 +1,105 @@
+/* CABECERA INTERNA */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.search-filter {
+    position: relative;
+    width: 350px;
+}
+
+.search-filter input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+/* TABLA ESTILO GESOTEC */
+.table-container {
+    background: white;
+    border: 1px solid #999;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background-color: #e0e0e0;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #999;
+    font-size: 14px;
+    color: #333;
+}
+
+.history-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.txt-bold { font-weight: bold; }
+
+/* BADGES DE ESTADO (Reutilizando colores previos) */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #000;
+    display: inline-block;
+}
+
+.open { background-color: #2ecc71; }    /* Verde */
+.process { background-color: #f1c40f; } /* Amarillo */
+.closed { background-color: #95a5a6; }  /* Gris */
+
+/* ETIQUETAS DE PRIORIDAD */
+.prio-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.baja { color: #27ae60; }
+.media { color: #d35400; }
+.alta { color: #c0392b; }
+
+/* BOTÓN VER */
+.btn-view {
+    text-decoration: none;
+    color: #1976d2;
+    font-weight: bold;
+    border: 1px solid #1976d2;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-view:hover {
+    background: #1976d2;
+    color: white;
+}
+

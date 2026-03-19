@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Historial de Tickets</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/UserHistorialTickets.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="UserPerfil.html" class="nav-item">🏠 Panel de Control</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Usuario</p>
+                            <a href="UserVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="content-header">
+                    <h2 class="page-title">Historial de Tickets</h2>
+                    <div class="search-filter">
+                        <input type="text" id="filterInput" placeholder="Buscar por asunto o ID...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Asunto</th>
+                                <th>Fecha de Apertura</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td>#1234</td>
+                                <td class="txt-bold">Problema con la impresora</td>
+                                <td>2026-03-10</td>
+                                <td><span class="prio-tag media">Media</span></td>
+                                <td><span class="status-badge open">Abierto</span></td>
+                                <td><a href="DetalleTicket.html?id=1234" class="btn-view">👁 Ver</a></td>
+                            </tr>
+                            <tr>
+                                <td>#1235</td>
+                                <td class="txt-bold">No puedo acceder al sistema</td>
+                                <td>2026-03-12</td>
+                                <td><span class="prio-tag alta">Alta</span></td>
+                                <td><span class="status-badge process">En Proceso</span></td>
+                                <td><a href="DetalleTicket.html?id=1235" class="btn-view">👁 Ver</a></td>
+                            </tr>
+                            <tr>
+                                <td>#1102</td>
+                                <td class="txt-bold">Error en el mouse inalámbrico</td>
+                                <td>2026-02-15</td>
+                                <td><span class="prio-tag baja">Baja</span></td>
+                                <td><span class="status-badge closed">Cerrado</span></td>
+                                <td><a href="DetalleTicket.html?id=1102" class="btn-view">👁 Ver</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../js/HistorialTickets.js"></script>
+</body>
+</html>
