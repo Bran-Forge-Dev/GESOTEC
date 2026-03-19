@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Tickets Asignados</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminTicketsAsignados.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item active">
+                        🏠 Panel de Control
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="avatar-footer-container">
+                            <div class="user-avatar">👤</div>
+                        </div>
+                        <div class="user-meta">
+                            <p>Administrador</p>
+                            <a href="AdminPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <h2 class="page-title">Tickets Asignados</h2>
+
+                <section class="filters-container">
+                    <div class="filter-group">
+                        <label>Filtrar por Estado</label>
+                        <select id="filterEstado">
+                            <option value="Todos">Todos</option>
+                            <option value="Abierto">Abierto</option>
+                            <option value="En Progreso">En Progreso</option>
+                            <option value="En Espera">En Espera</option>
+                            <option value="Cerrado">Cerrado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Filtrar por Prioridad</label>
+                        <select id="filterPrioridad">
+                            <option value="Todos">Todos</option>
+                            <option value="Urgente">Urgente</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Media">Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Técnico Asignado</label>
+                        <select id="filterAgente">
+                            <option value="Cualquiera">Cualquiera</option>
+                            <option value="Carlos Ruíz">Carlos Ruíz</option>
+                            <option value="Ana López">Ana López</option>
+                            <option value="Miguel Torres">Miguel Torres</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter" id="btnFiltrar">Filtrar</button>
+                </section>
+
+                <div class="table-wrapper">
+                    <table class="tickets-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ASUNTO</th>
+                                <th>Categoría</th>
+                                <th>PRIORIDAD</th>
+                                <th>ESTADO</th>
+                                <th>Agente</th>
+                                <th>FECHA LIMITE</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr data-estado="Abierto" data-prioridad="Urgente" data-agente="Carlos Ruíz">
+                                <td>#7855</td>
+                                <td class="txt-center">Fallo Servidor de Correo</td>
+                                <td>Correo</td>
+                                <td>Urgente</td>
+                                <td>Abierto</td>
+                                <td>Carlos Ruíz</td>
+                                <td class="date-urgent">Hoy, 14:00</td>
+                                <td><a href="DetalleTicket.html?id=7855" class="link-details">👁 Ver Detalles</a></td>
+                            </tr>
+                            <tr data-estado="En Progreso" data-prioridad="Alta" data-agente="Ana López">
+                                <td>#7853</td>
+                                <td class="txt-center">Solicitud Licencia de Office</td>
+                                <td>Software</td>
+                                <td>Alta</td>
+                                <td>En Progreso</td>
+                                <td>Ana López</td>
+                                <td class="date-normal">2023-10-25</td>
+                                <td><a href="DetalleTicket.html?id=7853" class="link-details">👁 Ver Detalles</a></td>
+                            </tr>
+                            <tr data-estado="En Espera" data-prioridad="Media" data-agente="Cualquiera">
+                                <td>#7851</td>
+                                <td class="txt-center">VPN no Conecta</td>
+                                <td>Red</td>
+                                <td>Media</td>
+                                <td>En Espera</td>
+                                <td class="unassigned">~ Sin asignar ~</td>
+                                <td class="date-today">Mañana, 09:00</td>
+                                <td><a href="DetalleTicket.html?id=7851" class="link-details">👁 Ver Detalles</a></td>
+                            </tr>
+                            <tr data-estado="Cerrado" data-prioridad="Baja" data-agente="Miguel Torres">
+                                <td>#7848</td>
+                                <td class="txt-center">Cambio de Teclado</td>
+                                <td>Hardware</td>
+                                <td>Baja</td>
+                                <td>Cerrado</td>
+                                <td>Miguel Torres</td>
+                                <td class="date-normal">2023-10-28</td>
+                                <td><a href="DetalleTicket.html?id=7848" class="link-details">👁 Ver Detalles</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="table-footer">
+                    <p>Mostrar 1 a 4 de 4 resultados</p>
+                    <div class="pagination">
+                        <button class="btn-page">Anterior</button>
+                        <button class="btn-page">Siguiente</button>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+    <script src="../js/AdminTicketsAsignados.js"></script>
+</body>
+</html>

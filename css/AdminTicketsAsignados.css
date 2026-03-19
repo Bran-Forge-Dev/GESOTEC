@@ -1,0 +1,107 @@
+.page-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* BARRA DE FILTROS */
+.filters-container {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.filter-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.btn-filter {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* TABLA */
+.table-wrapper {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tickets-table th {
+    background: #e0e0e0;
+    padding: 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.tickets-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    text-align: center;
+}
+
+.txt-center { text-align: center; font-weight: 500; }
+
+.link-details {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* COLORES DE FECHAS */
+.date-urgent { color: #1976d2; font-weight: bold; }
+.date-today { color: #1976d2; font-weight: 500; }
+.unassigned { color: #aaa; font-style: italic; }
+
+/* FOOTER / PAGINACIÓN */
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.btn-page {
+    background: #e0e0e0;
+    border: 1px solid #999;
+    padding: 5px 20px;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+}
