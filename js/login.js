@@ -1,23 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Simulación de Base de Datos (Hardcode temporal)
-    const usuariosDB = [
-        {
-            email: "admin@gesotec.com",
-            pass: "admin123",
-            redirect: "html/AdminPerfil.html"
-        },
-        {
-            email: "tecnico@gesotec.com",
-            pass: "tec123",
-            redirect: "html/TecPerfil.html"
-        },
-        {
-            email: "cliente@gesotec.com",
-            pass: "user123",
-            redirect: "html/UserPerfil.html"
-        }
-    ];
+    // Configuración de la API
+    const API_URL = 'http://localhost:3000/api';
 
     // Referencias al DOM
     const loginForm = document.getElementById('loginForm');
@@ -39,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejo del Login
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const emailIngresado = userEmail.value.trim();
@@ -51,15 +35,45 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Buscar coincidencia en la "DB"
-        const usuario = usuariosDB.find(u => u.email === emailIngresado && u.pass === passIngresada);
+        // Deshabilitar botón durante la petición
+        const submitBtn = loginForm.querySelector('.submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Iniciando sesión...';
 
-        if (usuario) {
-            alert("Bienvenido al sistema GESOTEC.");
-            window.location.href = usuario.redirect;
-        } else {
-            alert("Correo o contraseña incorrectos.");
-            userPass.value = ""; // Limpiar clave por seguridad
+        try {
+            // Llamada a la API del backend
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: emailIngresado,
+                    password: passIngresada
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Guardar información del usuario en localStorage
+                localStorage.setItem('gesotec_user', JSON.stringify(data.user));
+                
+                alert(`Bienvenido al sistema GESOTEC, ${data.user.nombre}.`);
+                
+                // Redirigir según el rol
+                window.location.href = data.redirect;
+            } else {
+                alert(data.error || 'Error al iniciar sesión');
+                userPass.value = ""; // Limpiar clave por seguridad
+            }
+        } catch (error) {
+            console.error('Error en login:', error);
+            alert('Error de conexión con el servidor. Verifica que el backend esté corriendo.');
+        } finally {
+            // Rehabilitar botón
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Iniciar sesión';
         }
     });
 });
