@@ -1,71 +1,83 @@
 document.addEventListener("DOMContentLoaded", function () {
     const userTableBody = document.getElementById('userTableBody');
     const searchInput = document.getElementById('searchInput');
+    const API_URL = 'http://localhost:3000/api';
 
-    // 1. FUNCIÓN PARA CARGAR USUARIOS (Desde LocalStorage + Fila Estática)
-    function cargarUsuarios() {
-        const usuariosLocal = JSON.parse(localStorage.getItem('usuarios_gesotec')) || [];
-        
-        // No limpiamos el body para mantener a "Ana López" (si es que la quieres dejar fija)
-        // Pero si quieres que TODO sea dinámico, podrías usar: userTableBody.innerHTML = '';
+    // 1. FUNCIÓN PARA CARGAR USUARIOS (Desde Backend)
+    async function cargarUsuarios() {
+        try {
+            const response = await fetch(`${API_URL}/users`);
+            const usuarios = await response.json();
 
-        usuariosLocal.forEach((user, index) => {
-            const row = document.createElement('tr');
-            // Usamos el email como identificador único para el borrado
-            row.setAttribute('data-email', user.email); 
-            
-            row.innerHTML = `
-                <td>${user.nombre}</td>
-                <td>${user.email}</td>
-                <td>${user.rol}</td>
-                <td>${user.fecha}</td>
-                <td class="acciones">
-                    <a href="AdminEditarUsuario.html" class="icon-btn edit">
-                        <span class="material-icons">edit</span>
-                    </a>
-                    <button class="icon-btn delete">
-                        <span class="material-icons">delete</span>
-                    </button>
-                </td>
-            `;
-            userTableBody.appendChild(row);
-        });
+            // Limpiar tabla
+            userTableBody.innerHTML = '';
 
-        // Re-asignamos los eventos a los nuevos botones creados
-        asignarEventosEliminar();
+            usuarios.forEach(user => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-id', user.id);
+                row.setAttribute('data-email', user.email);
+                
+                const fecha = new Date(user.fecha_creacion).toLocaleDateString('es-ES');
+                
+                row.innerHTML = `
+                    <td>${user.nombre} ${user.apellido || ''}</td>
+                    <td>${user.email}</td>
+                    <td>${user.rol}</td>
+                    <td>${fecha}</td>
+                    <td class="acciones">
+                        <a href="AdminEditarUsuario.html?id=${user.id}" class="icon-btn edit">
+                            <span class="material-icons">edit</span>
+                        </a>
+                        <button class="icon-btn delete" data-id="${user.id}" data-email="${user.email}">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </td>
+                `;
+                userTableBody.appendChild(row);
+            });
+
+            // Asignar eventos a los botones de eliminar
+            asignarEventosEliminar();
+        } catch (error) {
+            console.error('Error al cargar usuarios:', error);
+            alert('Error al cargar usuarios desde el servidor');
+        }
     }
 
-    // 2. LÓGICA DE ELIMINACIÓN MEJORADA
+    // 2. LÓGICA DE ELIMINACIÓN
     function asignarEventosEliminar() {
         const botonesEliminar = document.querySelectorAll(".delete");
 
         botonesEliminar.forEach(boton => {
-            // Eliminamos listeners previos para no duplicar (limpieza)
-            boton.replaceWith(boton.cloneNode(true));
-        });
-
-        // Volvemos a seleccionar y asignar
-        document.querySelectorAll(".delete").forEach(boton => {
-            boton.addEventListener("click", function () {
+            boton.addEventListener("click", async function () {
                 const fila = boton.closest("tr");
-                const emailAEliminar = fila.cells[1].innerText; // El email está en la segunda columna
+                const userId = boton.getAttribute('data-id');
+                const email = boton.getAttribute('data-email');
                 const nombre = fila.cells[0].innerText;
 
                 if (confirm(`¿Estás seguro de que deseas eliminar a ${nombre}?`)) {
-                    // --- A. Borrar del LocalStorage ---
-                    let usuarios = JSON.parse(localStorage.getItem('usuarios_gesotec')) || [];
-                    usuarios = usuarios.filter(u => u.email !== emailAEliminar);
-                    localStorage.setItem('usuarios_gesotec', JSON.stringify(usuarios));
+                    try {
+                        const response = await fetch(`${API_URL}/users/${userId}`, {
+                            method: 'DELETE'
+                        });
 
-                    // --- B. Animación y Borrar del HTML ---
-                    fila.style.transition = "0.3s";
-                    fila.style.backgroundColor = "#f8d7da";
-                    fila.style.transform = "translateX(10px)";
-                    fila.style.opacity = "0";
+                        if (response.ok) {
+                            // Animación y borrar del HTML
+                            fila.style.transition = "0.3s";
+                            fila.style.backgroundColor = "#f8d7da";
+                            fila.style.transform = "translateX(10px)";
+                            fila.style.opacity = "0";
 
-                    setTimeout(() => {
-                        fila.remove();
-                    }, 300);
+                            setTimeout(() => {
+                                fila.remove();
+                            }, 300);
+                        } else {
+                            alert('Error al eliminar usuario');
+                        }
+                    } catch (error) {
+                        console.error('Error al eliminar usuario:', error);
+                        alert('Error de conexión con el servidor');
+                    }
                 }
             });
         });
