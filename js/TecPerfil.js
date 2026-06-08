@@ -1,34 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificar si el usuario tiene permiso (Simulación de sesión)
-    // Esto evita que entren a la URL directamente sin loguearse
-    const sesionActiva = true; // Cambiar a lógica real después
+    // 1. Verificar si el usuario tiene sesión activa
+    const usuario = JSON.parse(localStorage.getItem('gesotec_user'));
 
-    if (!sesionActiva) {
+    if (!usuario) {
         window.location.href = "../index.html";
         return;
     }
 
-    // 2. Referencias a elementos de la interfaz
-    const logoutSelect = document.querySelector('.logout-select');
-    const tecnicoNombre = document.querySelector('.data-display-box p:nth-child(1) strong');
+    // 2. Verificar que el usuario sea técnico
+    if (usuario.rol !== 'tecnico') {
+        window.location.href = "../index.html";
+        return;
+    }
 
-    // 3. Manejo del cierre de sesión
+    // 3. Cargar datos del usuario en la interfaz
+    const nombreElement = document.getElementById('displayNombre');
+    const correoElement = document.getElementById('displayCorreo');
+    const rolElement = document.querySelector('.role-label');
+
+    if (nombreElement) {
+        nombreElement.textContent = usuario.nombre + ' ' + (usuario.apellido || '');
+    }
+
+    if (correoElement) {
+        correoElement.textContent = usuario.email;
+    }
+
+    if (rolElement) {
+        rolElement.textContent = 'Técnico';
+    }
+
+    // 4. Referencias a elementos de la interfaz
+    const logoutSelect = document.querySelector('.logout-select');
+
+    // 5. Manejo del cierre de sesión
     if (logoutSelect) {
         logoutSelect.addEventListener('change', (e) => {
             if (e.target.value === 'exit') {
                 const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
                 if (confirmar) {
-                    // Aquí borrarías tokens o cookies en el futuro
+                    localStorage.removeItem('gesotec_user');
                     window.location.href = "../index.html";
                 } else {
-                    // Resetear el select si cancela
                     e.target.value = "";
                 }
             }
         });
     }
 
-    // 4. Efecto visual en las tarjetas (Opcional)
+    // 6. Efecto visual en las tarjetas
     const cards = document.querySelectorAll('.card-item');
     cards.forEach(card => {
         card.addEventListener('mouseenter', () => {
@@ -39,5 +59,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    console.log("Panel de Control del Técnico cargado correctamente.");
+    console.log("Panel de Control del Técnico cargado correctamente para:", usuario.nombre);
 });
