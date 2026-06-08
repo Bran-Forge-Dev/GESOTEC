@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Cargar tickets del usuario desde el backend
     async function cargarTickets() {
         try {
-            const response = await fetch(`http://localhost:3000/api/tickets/usuario/${usuario.id}`);
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/usuario/${usuario.id}`);
             const tickets = await response.json();
 
             if (response.ok) {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para mostrar detalles del ticket
     async function mostrarDetallesTicket(ticketId) {
         try {
-            const response = await fetch(`http://localhost:3000/api/tickets/${ticketId}`);
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/${ticketId}`);
             const ticket = await response.json();
 
             if (response.ok) {

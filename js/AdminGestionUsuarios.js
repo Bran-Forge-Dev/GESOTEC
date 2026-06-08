@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const userTableBody = document.getElementById('userTableBody');
     const searchInput = document.getElementById('searchInput');
-    const API_URL = 'http://localhost:3000/api';
+    const API_URL = 'https://gesotec.onrender.com/api';
 
     // 1. FUNCIÓN PARA CARGAR USUARIOS (Desde Backend)
     async function cargarUsuarios() {

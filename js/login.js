@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Configuración de la API
-    const API_URL = 'http://localhost:3000/api';
+    const API_URL = 'https://gesotec.onrender.com/api';
 
     // Referencias al DOM
     const loginForm = document.getElementById('loginForm');

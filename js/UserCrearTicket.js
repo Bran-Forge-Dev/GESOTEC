@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/tickets', {
+            const response = await fetch('https://gesotec.onrender.com/api/tickets', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

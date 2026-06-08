@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const newUserForm = document.getElementById('newUserForm');
-    const API_URL = 'http://localhost:3000/api';
+    const API_URL = 'https://gesotec.onrender.com/api';
 
     if (!newUserForm) {
         console.error("No se encontró el formulario 'newUserForm'");
