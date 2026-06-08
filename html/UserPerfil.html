@@ -22,7 +22,7 @@
         <div class="app-body">
             <aside class="sidebar">
                 <nav class="sidebar-nav">
-                    <a href="UserPerfil.html" class="nav-item active">
+                    <a href="#" class="nav-item active">
                         <span class="nav-icon">🏠</span> Panel de Control
                     </a>
                 </nav>
@@ -43,8 +43,15 @@
                         <div class="big-avatar">👤</div>
                         <h2 class="role-name">Usuario</h2>
                         <div class="data-display-box">
-                            <p><strong>Nombre:</strong> Juan Perez</p>
-                            <p><strong>Correo:</strong> juan.perez@gesotec.com</p>
+                            <p><strong>Nombre:</strong> <span id="displayNombre"></span></p>
+                            <p><strong>Correo:</strong> <span id="displayCorreo"></span></p>
+                        </div>
+                        <div class="logout-group">
+                            <div class="gear-icon">⚙️</div>
+                            <select class="logout-select" onchange="if(this.value=='exit') window.location.href='../index.html'">
+                                <option value="">Cerrar sesión</option>
+                                <option value="exit">Salir</option>
+                            </select>
                         </div>
                     </div>
                 </section>
@@ -65,7 +72,7 @@
                     <div class="panel-box">
                         <h3>Acciones Rápidos</h3>
                         <a href="UserCrearTicket.html" class="btn-action btn-blue">Crear Nuevo Ticket</a>
-                        <a href="#" class="btn-action btn-gray">Ver Historial de Tickets</a>
+                        <a href="UserHistorialTickets.html" class="btn-action btn-gray">Ver Historial de Tickets</a>
                         <a href="UserVerPerfil.html" class="btn-action btn-light-green">Ver Perfil</a>
                     </div>
                 </div>

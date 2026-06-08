@@ -1,33 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificar si el usuario tiene permiso (Simulación de sesión)
-    // Esto evita que entren a la URL directamente sin loguearse
-    const sesionActiva = true; // Cambiar a lógica real después cuando conectes la DB
+    // 1. Verificar si el usuario tiene sesión activa
+    const usuario = JSON.parse(localStorage.getItem('gesotec_user'));
 
-    if (!sesionActiva) {
+    if (!usuario) {
         window.location.href = "../index.html";
         return;
     }
 
-    // 2. Referencias a elementos de la interfaz
-    // En el perfil de usuario, el cierre de sesión suele estar en el footer del sidebar o un botón específico
-    const profileLink = document.querySelector('.profile-link'); 
-    const usuarioNombre = document.querySelector('.user-data-box p:nth-child(1) strong');
+    // 2. Verificar que el usuario sea usuario normal
+    if (usuario.rol !== 'usuario') {
+        window.location.href = "../index.html";
+        return;
+    }
 
-    // 3. Manejo del cierre de sesión (Adaptado para enlaces/botones)
-    // Si decides añadir un botón de "Salir" o usar el link de perfil para cerrar sesión
-    const logoutAction = () => {
-        const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
-        if (confirmar) {
-            // Aquí borrarías tokens o cookies en el futuro
-            window.location.href = "../index.html";
+    // 3. Cargar datos del usuario en la interfaz
+    const nombreElement = document.getElementById('displayNombre');
+    const correoElement = document.getElementById('displayCorreo');
+    const rolElement = document.querySelector('.role-name');
+
+    if (nombreElement) {
+        nombreElement.textContent = usuario.nombre + ' ' + (usuario.apellido || '');
+    }
+
+    if (correoElement) {
+        correoElement.textContent = usuario.email;
+    }
+
+    if (rolElement) {
+        rolElement.textContent = 'Usuario';
+    }
+
+    // 4. Referencias a elementos de la interfaz
+    const logoutSelect = document.querySelector('.logout-select');
+
+    // 5. Manejo del cierre de sesión
+    logoutSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'exit') {
+            localStorage.removeItem('gesotec_user');
+            window.location.href = '../index.html';
         }
-    };
+    });
 
-    // 4. Efecto visual en los contenedores y botones de acción (Similar a las tarjetas del técnico)
+    // 6. Efecto visual en los contenedores y botones de acción
     const actionButtons = document.querySelectorAll('.action-btn');
     const ticketItems = document.querySelectorAll('.ticket-item');
 
-    // Aplicar efectos a los botones de "Acciones Rápidas"
     actionButtons.forEach(btn => {
         btn.addEventListener('mouseenter', () => {
             btn.style.transform = "scale(1.02)";
@@ -40,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Aplicar efectos a las filas de tickets
     ticketItems.forEach(item => {
         item.addEventListener('mouseenter', () => {
             item.style.backgroundColor = "#f9f9f9";
@@ -52,5 +68,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    console.log("Panel de Control del Usuario Final cargado correctamente.");
+    console.log("Panel de Control del Usuario Final cargado correctamente para:", usuario.nombre);
 });
