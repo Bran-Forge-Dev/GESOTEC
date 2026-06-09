@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'https://gesotec.onrender.com/api';
     const form = document.getElementById('formNuevaTarea');
     const dropzone = document.getElementById('dropzone');
+    const selectTecnico = document.getElementById('selectTecnico');
 
     // 1. Verificar sesión y rol
     const usuario = JSON.parse(localStorage.getItem('gesotec_user'));
@@ -11,7 +12,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 2. Efecto visual simple para el dropzone
+    // 2. Cargar técnicos desde el backend
+    async function cargarTecnicos() {
+        try {
+            const response = await fetch(`${API_URL}/users/tecnicos`);
+            const tecnicos = await response.json();
+
+            if (response.ok && tecnicos) {
+                // Limpiar select
+                selectTecnico.innerHTML = '<option value="">Sin asignar</option>';
+
+                // Agregar técnicos al select
+                tecnicos.forEach(tecnico => {
+                    const option = document.createElement('option');
+                    option.value = tecnico.id;
+                    option.textContent = `${tecnico.nombre} ${tecnico.apellido || ''}`;
+                    selectTecnico.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('Error al cargar técnicos:', error);
+        }
+    }
+
+    // 3. Efecto visual simple para el dropzone
     dropzone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropzone.style.borderColor = '#1976d2';
@@ -23,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dropzone.style.background = '#fcfcfc';
     });
 
-    // 3. Manejar envío del formulario
+    // 4. Manejar envío del formulario
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -32,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoria = form.querySelector('select').value;
         const prioridad = form.querySelector('input[name="prio"]:checked').value;
         const descripcion = form.querySelector('textarea').value;
-        const tecnico = form.querySelector('input[placeholder="Buscar técnico..."]').value;
+        const tecnicoId = selectTecnico.value;
 
         // Construir datos de la tarea
         const tareaData = {
@@ -40,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descripcion,
             categoria,
             prioridad: prioridad.charAt(0).toUpperCase() + prioridad.slice(1),
-            tecnico_id: tecnico || null
+            tecnico_id: tecnicoId || null
         };
 
         try {
@@ -65,4 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Error de conexión con el servidor');
         }
     });
+
+    // Cargar técnicos al iniciar
+    cargarTecnicos();
 });
