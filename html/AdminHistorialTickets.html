@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Historial de Tickets</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminHistorialTickets.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item">🏠 Panel de Control</a>
+                    <a href="AdminHistorialTickets.html" class="nav-item active">📋 Historial de Tickets</a>
+                    <a href="AdminTicketsAsignados.html" class="nav-item">👤 Tickets Asignados</a>
+                    <a href="AdminTableroTareas.html" class="nav-item">📊 Gestión de Tareas</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p>Administrador</p>
+                            <a href="AdminPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="content-header">
+                    <h2 class="page-title">Historial de Tickets</h2>
+                    <div class="search-filter">
+                        <input type="text" id="filterInput" placeholder="Buscar por asunto o ID...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Asunto</th>
+                                <th>Usuario</th>
+                                <th>Fecha de Apertura</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Los tickets se cargarán dinámicamente desde el backend -->
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles del Ticket -->
+    <div id="ticketModal" class="ticket-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del Ticket</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-row">
+                    <label>ID del Ticket:</label>
+                    <span id="modalTicketId"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Asunto:</label>
+                    <span id="modalAsunto"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Descripción:</label>
+                    <p id="modalDescripcion"></p>
+                </div>
+                <div class="detail-row">
+                    <label>Prioridad:</label>
+                    <span id="modalPrioridad"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Estado:</label>
+                    <span id="modalEstado"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Usuario:</label>
+                    <span id="modalUsuario"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Técnico Asignado:</label>
+                    <span id="modalTecnico"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Fecha de Creación:</label>
+                    <span id="modalFechaCreacion"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Última Actualización:</label>
+                    <span id="modalFechaActualizacion"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/AdminHistorialTickets.js"></script>
+</body>
+</html>

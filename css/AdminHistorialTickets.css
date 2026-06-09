@@ -1,0 +1,205 @@
+/* CABECERA INTERNA */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.search-filter {
+    position: relative;
+    width: 350px;
+}
+
+.search-filter input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+/* TABLA ESTILO GESOTEC */
+.table-container {
+    background: white;
+    border: 1px solid #999;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background-color: #e0e0e0;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #999;
+    font-size: 14px;
+    color: #333;
+}
+
+.history-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.txt-bold { font-weight: bold; }
+
+/* BADGES DE ESTADO */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #000;
+    display: inline-block;
+}
+
+.open { background-color: #2ecc71; }      /* Verde - Abierto */
+.process { background-color: #f1c40f; }   /* Amarillo - En Proceso */
+.resolved { background-color: #3498db; } /* Azul - Resuelto */
+.closed { background-color: #95a5a6; }    /* Gris - Cerrado */
+
+/* ETIQUETAS DE PRIORIDAD */
+.prio-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.baja { color: #27ae60; }
+.media { color: #d35400; }
+.alta { color: #c0392b; }
+.critica { color: #8e44ad; }
+
+/* BOTÓN VER */
+.btn-view {
+    text-decoration: none;
+    color: #1976d2;
+    font-weight: bold;
+    border: 1px solid #1976d2;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.btn-view:hover {
+    background: #1976d2;
+    color: white;
+}
+
+/* MODAL DE DETALLES DEL TICKET */
+.ticket-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    background-color: #f5f5f5;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.close-modal:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.detail-row label {
+    font-weight: 600;
+    color: #555;
+    min-width: 150px;
+    margin-right: 15px;
+}
+
+.detail-row span,
+.detail-row p {
+    color: #333;
+    flex: 1;
+    word-break: break-word;
+}
+
+.detail-row p {
+    margin: 0;
+    line-height: 1.5;
+}
