@@ -2,6 +2,27 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 
+// Obtener todos los tickets (solo admin)
+router.get('/', async (req, res) => {
+    try {
+        const { data: tickets, error } = await supabase
+            .from('tickets')
+            .select('*')
+            .order('fecha_creacion', { ascending: false });
+
+        if (error) {
+            console.error('Error al obtener tickets:', error);
+            return res.status(500).json({ error: 'Error al obtener tickets' });
+        }
+
+        res.json(tickets);
+
+    } catch (error) {
+        console.error('Error al obtener tickets:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 // Crear nuevo ticket
 router.post('/', async (req, res) => {
     try {
