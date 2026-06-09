@@ -13,8 +13,7 @@ CREATE TABLE IF NOT EXISTS tareas (
     fecha_completacion TIMESTAMP
 );
 
--- Crear índices
-CREATE INDEX IF NOT EXISTS idx_tareas_tecnico_id ON tareas(tecnico_id);
+-- Crear índices (sin tecnico_id por ahora)
 CREATE INDEX IF NOT EXISTS idx_tareas_estado ON tareas(estado);
 CREATE INDEX IF NOT EXISTS idx_tareas_prioridad ON tareas(prioridad);
 CREATE INDEX IF NOT EXISTS idx_tareas_categoria ON tareas(categoria);
