@@ -22,6 +22,27 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Obtener técnicos (filtrar por rol = 'tecnico')
+router.get('/tecnicos', async (req, res) => {
+    try {
+        const { data: tecnicos, error } = await supabase
+            .from('usuarios')
+            .select('id, nombre, apellido, email')
+            .eq('rol', 'tecnico')
+            .eq('activo', true)
+            .order('nombre', { ascending: true });
+
+        if (error) {
+            return res.status(500).json({ error: 'Error al obtener técnicos' });
+        }
+
+        res.json(tecnicos);
+    } catch (error) {
+        console.error('Error al obtener técnicos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 // Crear nuevo usuario (solo admin)
 router.post('/', async (req, res) => {
     try {
