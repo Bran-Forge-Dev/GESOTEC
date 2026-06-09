@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS tareas (
     categoria VARCHAR(50) DEFAULT 'general',
     prioridad VARCHAR(50) DEFAULT 'Media',
     estado VARCHAR(50) DEFAULT 'Por Hacer',
-    tecnico_id INTEGER REFERENCES usuarios(id),
+    tecnico_id INTEGER,
     fecha_limite DATE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
