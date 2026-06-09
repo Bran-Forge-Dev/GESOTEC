@@ -115,16 +115,18 @@ router.put('/:id', async (req, res) => {
         const { id } = req.params;
         const { asunto, descripcion, prioridad, estado, tecnico_id } = req.body;
 
+        // Construir objeto de actualización solo con campos proporcionados
+        const updateData = {};
+        if (asunto !== undefined) updateData.asunto = asunto;
+        if (descripcion !== undefined) updateData.descripcion = descripcion;
+        if (prioridad !== undefined) updateData.prioridad = prioridad;
+        if (estado !== undefined) updateData.estado = estado;
+        if (tecnico_id !== undefined) updateData.tecnico_id = tecnico_id;
+        updateData.fecha_actualizacion = new Date().toISOString();
+
         const { data: updatedTicket, error } = await supabase
             .from('tickets')
-            .update({
-                asunto,
-                descripcion,
-                prioridad,
-                estado,
-                tecnico_id,
-                fecha_actualizacion: new Date().toISOString()
-            })
+            .update(updateData)
             .eq('id', id)
             .select()
             .single();
@@ -134,9 +136,9 @@ router.put('/:id', async (req, res) => {
             return res.status(500).json({ error: 'Error al actualizar ticket' });
         }
 
-        res.json({ 
+        res.json({
             message: 'Ticket actualizado exitosamente',
-            ticket: updatedTicket 
+            ticket: updatedTicket
         });
 
     } catch (error) {
