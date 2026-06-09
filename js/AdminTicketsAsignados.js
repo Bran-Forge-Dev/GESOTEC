@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({
                     tecnico_id: tecnicoId,
-                    estado: 'En Progreso'
+                    estado: 'En_Proceso'
                 })
             });
 
