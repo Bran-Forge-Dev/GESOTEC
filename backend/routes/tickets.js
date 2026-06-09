@@ -115,6 +115,21 @@ router.put('/:id', async (req, res) => {
         const { id } = req.params;
         const { asunto, descripcion, prioridad, estado, tecnico_id } = req.body;
 
+        console.log('Actualizando ticket ID:', id);
+        console.log('Datos recibidos:', { asunto, descripcion, prioridad, estado, tecnico_id });
+
+        // Verificar que el ticket existe
+        const { data: existingTicket, error: checkError } = await supabase
+            .from('tickets')
+            .select('id')
+            .eq('id', id)
+            .single();
+
+        if (checkError || !existingTicket) {
+            console.error('Ticket no encontrado:', checkError);
+            return res.status(404).json({ error: 'Ticket no encontrado' });
+        }
+
         // Construir objeto de actualización solo con campos proporcionados
         const updateData = {};
         if (asunto !== undefined) updateData.asunto = asunto;
@@ -123,6 +138,8 @@ router.put('/:id', async (req, res) => {
         if (estado !== undefined) updateData.estado = estado;
         if (tecnico_id !== undefined) updateData.tecnico_id = tecnico_id;
         updateData.fecha_actualizacion = new Date().toISOString();
+
+        console.log('Datos a actualizar:', updateData);
 
         const { data: updatedTicket, error } = await supabase
             .from('tickets')
@@ -133,8 +150,10 @@ router.put('/:id', async (req, res) => {
 
         if (error) {
             console.error('Error al actualizar ticket:', error);
-            return res.status(500).json({ error: 'Error al actualizar ticket' });
+            return res.status(500).json({ error: 'Error al actualizar ticket', details: error.message });
         }
+
+        console.log('Ticket actualizado exitosamente:', updatedTicket);
 
         res.json({
             message: 'Ticket actualizado exitosamente',
@@ -143,7 +162,7 @@ router.put('/:id', async (req, res) => {
 
     } catch (error) {
         console.error('Error al actualizar ticket:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor', details: error.message });
     }
 });
 
