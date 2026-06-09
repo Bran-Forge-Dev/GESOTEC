@@ -112,6 +112,55 @@
             </main>
         </div>
     </div>
+
+    <!-- Modal de Detalles de Tarea -->
+    <div id="tareaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles de la Tarea</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tarea-detail-row">
+                    <span class="detail-label">ID:</span>
+                    <span class="detail-value" id="modalTareaId">#-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Título:</span>
+                    <span class="detail-value" id="modalTitulo">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Descripción:</span>
+                    <span class="detail-value" id="modalDescripcion">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Categoría:</span>
+                    <span class="detail-value" id="modalCategoria">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Prioridad:</span>
+                    <span class="detail-value" id="modalPrioridad">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Estado:</span>
+                    <span class="detail-value" id="modalEstado">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Fecha Límite:</span>
+                    <span class="detail-value" id="modalFechaLimite">-</span>
+                </div>
+                <div class="tarea-detail-row">
+                    <span class="detail-label">Fecha de Creación:</span>
+                    <span class="detail-value" id="modalFechaCreacion">-</span>
+                </div>
+                <div class="modal-actions">
+                    <button id="btnMarcarCompletada" class="btn-complete">✓ Marcar como Completada</button>
+                    <button id="btnEliminarTarea" class="btn-delete">🗑 Eliminar Tarea</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/AdminTableroTareas.js"></script>
 </body>
 </html>

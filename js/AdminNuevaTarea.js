@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const API_URL = 'https://gesotec.onrender.com/api';
     const form = document.getElementById('formNuevaTarea');
     const dropzone = document.getElementById('dropzone');
 
-    // Efecto visual simple para el dropzone
+    // 1. Verificar sesión y rol
+    const usuario = JSON.parse(localStorage.getItem('gesotec_user'));
+    if (!usuario || usuario.rol !== 'admin') {
+        alert('Acceso no autorizado');
+        window.location.href = '../index.html';
+        return;
+    }
+
+    // 2. Efecto visual simple para el dropzone
     dropzone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropzone.style.borderColor = '#1976d2';
@@ -14,9 +23,46 @@ document.addEventListener('DOMContentLoaded', () => {
         dropzone.style.background = '#fcfcfc';
     });
 
-    form.addEventListener('submit', (e) => {
+    // 3. Manejar envío del formulario
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        alert("Tarea guardada exitosamente en el tablero.");
-        window.location.href = "adminTableroTareas.html";
+
+        // Obtener valores del formulario
+        const titulo = form.querySelector('input[type="text"]').value;
+        const categoria = form.querySelector('select').value;
+        const prioridad = form.querySelector('input[name="prio"]:checked').value;
+        const descripcion = form.querySelector('textarea').value;
+        const tecnico = form.querySelector('input[placeholder="Buscar técnico..."]').value;
+
+        // Construir datos de la tarea
+        const tareaData = {
+            titulo,
+            descripcion,
+            categoria,
+            prioridad: prioridad.charAt(0).toUpperCase() + prioridad.slice(1),
+            tecnico_id: tecnico || null
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/tareas`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tareaData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Tarea creada exitosamente');
+                window.location.href = 'AdminTableroTareas.html';
+            } else {
+                alert(data.error || 'Error al crear tarea');
+            }
+        } catch (error) {
+            console.error('Error al crear tarea:', error);
+            alert('Error de conexión con el servidor');
+        }
     });
 });
