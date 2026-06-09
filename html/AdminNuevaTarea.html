@@ -86,9 +86,12 @@
 
                         <div class="form-group full-width">
                             <label>Asignar Técnico</label>
-                            <select id="selectTecnico">
-                                <option value="">Sin asignar</option>
-                            </select>
+                            <div class="input-container">
+                                <span class="input-icon">👤+</span>
+                                <select id="selectTecnico">
+                                    <option value="">Sin asignar</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="upload-area" id="dropzone">
@@ -100,7 +103,7 @@
                         </div>
 
                         <footer class="form-footer">
-                            <button type="button" class="btn-cancel" onclick="window.location.href='adminTableroTareas.html'">Cancelar</button>
+                            <button type="button" class="btn-cancel" onclick="window.location.href='AdminTableroTareas.html'">Cancelar</button>
                             <button type="submit" class="btn-save">Guardar Tarea</button>
                         </footer>
                     </form>

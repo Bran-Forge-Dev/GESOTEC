@@ -18,17 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${API_URL}/users/tecnicos`);
             const tecnicos = await response.json();
 
-            if (response.ok && tecnicos) {
-                // Limpiar select
+            if (response.ok) {
+                // Limpiar el select
                 selectTecnico.innerHTML = '<option value="">Sin asignar</option>';
 
-                // Agregar técnicos al select
+                // Llenar el select con los técnicos
                 tecnicos.forEach(tecnico => {
                     const option = document.createElement('option');
                     option.value = tecnico.id;
                     option.textContent = `${tecnico.nombre} ${tecnico.apellido || ''}`;
                     selectTecnico.appendChild(option);
                 });
+            } else {
+                console.error('Error al cargar técnicos:', tecnicos);
             }
         } catch (error) {
             console.error('Error al cargar técnicos:', error);
