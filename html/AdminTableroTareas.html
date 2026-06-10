@@ -49,32 +49,16 @@
                 </header>
 
                 <div class="kanban-board">
-                    
+
                     <section class="kanban-column column-todo">
                         <header class="column-header">
                             <span class="status-dot red">●</span>
                             <h3>Por Hacer</h3>
-                            <span class="task-count">2</span>
+                            <span class="task-count" id="countTodo">0</span>
                         </header>
-                        
-                        <div class="task-list">
-                            <article class="task-card">
-                                <span class="tag tag-alta">Alta Prioridad</span>
-                                <h4>Actualización de software</h4>
-                                <p>Actualizar sistema operativo de servidores principales a v2024.</p>
-                                <footer class="card-footer">
-                                    <span class="icon">📅 12 Oct</span>
-                                </footer>
-                            </article>
-                            
-                            <article class="task-card">
-                                <span class="tag tag-media">Media</span>
-                                <h4>Mantenimiento al servidor</h4>
-                                <p>Revisión rutinaria de logs y limpieza de temporales.</p>
-                                <footer class="card-footer">
-                                    <span class="icon">💬 2</span>
-                                </footer>
-                            </article>
+
+                        <div class="task-list" id="listTodo">
+                            <!-- Las tareas se cargarán dinámicamente desde el backend -->
                         </div>
                         <button class="btn-add-card">＋ Añadir tarjeta</button>
                     </section>
@@ -82,18 +66,11 @@
                     <section class="kanban-column column-progress">
                         <header class="column-header">
                             <span class="status-dot blue">●</span>
-                            <h3>Por Hacer</h3> <span class="task-count">1</span>
+                            <h3>En Progreso</h3> <span class="task-count" id="countProgress">0</span>
                         </header>
-                        
-                        <div class="task-list">
-                            <article class="task-card">
-                                <span class="tag tag-baja">Baja</span>
-                                <h4>Mantenimiento a los equipos</h4>
-                                <p>Limpieza física y rendimiento de cableado en sala 2.</p>
-                                <footer class="card-footer">
-                                    <span class="icon">📎 3</span>
-                                </footer>
-                            </article>
+
+                        <div class="task-list" id="listProgress">
+                            <!-- Las tareas se cargarán dinámicamente desde el backend -->
                         </div>
                         <button class="btn-add-card">＋ Añadir tarjeta</button>
                     </section>
@@ -102,13 +79,11 @@
                         <header class="column-header">
                             <span class="status-dot green">●</span>
                             <h3>Completadas</h3>
-                            <span class="task-count">3</span>
+                            <span class="task-count" id="countDone">0</span>
                         </header>
-                        
-                        <div class="task-list">
-                            <article class="task-card done-card"><h4>Configurar red</h4></article>
-                            <article class="task-card done-card"><h4>Error en aplicación</h4></article>
-                            <article class="task-card done-card"><h4>Copia de seguridad</h4></article>
+
+                        <div class="task-list" id="listDone">
+                            <!-- Las tareas se cargarán dinámicamente desde el backend -->
                         </div>
                     </section>
                 </div>
