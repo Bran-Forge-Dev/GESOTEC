@@ -7,7 +7,11 @@ router.get('/', async (req, res) => {
     try {
         const { data: tickets, error } = await supabase
             .from('tickets')
-            .select('*')
+            .select(`
+                *,
+                usuarios!tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+            `)
             .order('fecha_creacion', { ascending: false });
 
         if (error) {
@@ -15,7 +19,14 @@ router.get('/', async (req, res) => {
             return res.status(500).json({ error: 'Error al obtener tickets' });
         }
 
-        res.json(tickets);
+        // Formatear los tickets para incluir nombres
+        const formattedTickets = tickets.map(ticket => ({
+            ...ticket,
+            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
+        }));
+
+        res.json(formattedTickets);
 
     } catch (error) {
         console.error('Error al obtener tickets:', error);
@@ -69,7 +80,11 @@ router.get('/usuario/:usuario_id', async (req, res) => {
 
         const { data: tickets, error } = await supabase
             .from('tickets')
-            .select('*')
+            .select(`
+                *,
+                usuarios!tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+            `)
             .eq('usuario_id', usuario_id)
             .order('fecha_creacion', { ascending: false });
 
@@ -78,7 +93,14 @@ router.get('/usuario/:usuario_id', async (req, res) => {
             return res.status(500).json({ error: 'Error al obtener tickets' });
         }
 
-        res.json(tickets);
+        // Formatear los tickets para incluir nombres
+        const formattedTickets = tickets.map(ticket => ({
+            ...ticket,
+            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
+        }));
+
+        res.json(formattedTickets);
 
     } catch (error) {
         console.error('Error al obtener tickets:', error);
@@ -93,7 +115,11 @@ router.get('/:id', async (req, res) => {
 
         const { data: ticket, error } = await supabase
             .from('tickets')
-            .select('*')
+            .select(`
+                *,
+                usuarios!tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+            `)
             .eq('id', id)
             .single();
 
@@ -101,7 +127,14 @@ router.get('/:id', async (req, res) => {
             return res.status(404).json({ error: 'Ticket no encontrado' });
         }
 
-        res.json(ticket);
+        // Formatear el ticket para incluir nombres
+        const formattedTicket = {
+            ...ticket,
+            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
+        };
+
+        res.json(formattedTicket);
 
     } catch (error) {
         console.error('Error al obtener ticket:', error);
