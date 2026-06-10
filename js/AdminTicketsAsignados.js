@@ -6,9 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.getElementById('closeModal');
     const selectTecnico = document.getElementById('selectTecnico');
     const btnAsignarTecnico = document.getElementById('btnAsignarTecnico');
+    const filterEstado = document.getElementById('filterEstado');
+    const filterPrioridad = document.getElementById('filterPrioridad');
+    const filterAgente = document.getElementById('filterAgente');
 
     let currentTicketId = null;
     let tecnicos = [];
+    let tickets = [];
 
     // 1. Verificar sesión y rol
     const usuario = JSON.parse(localStorage.getItem('gesotec_user'));
@@ -24,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${API_URL}/users/tecnicos`);
             tecnicos = await response.json();
 
-            // Llenar el select de técnicos
+            // Llenar el select de técnicos del modal
             selectTecnico.innerHTML = '<option value="">Seleccionar técnico...</option>';
             tecnicos.forEach(tecnico => {
                 const option = document.createElement('option');
@@ -32,16 +36,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 option.textContent = `${tecnico.nombre} ${tecnico.apellido || ''}`;
                 selectTecnico.appendChild(option);
             });
+
+            // Llenar el select de filtro de técnicos
+            filterAgente.innerHTML = '<option value="Cualquiera">Cualquiera</option>';
+            tecnicos.forEach(tecnico => {
+                const option = document.createElement('option');
+                option.value = `${tecnico.nombre} ${tecnico.apellido || ''}`;
+                option.textContent = `${tecnico.nombre} ${tecnico.apellido || ''}`;
+                filterAgente.appendChild(option);
+            });
         } catch (error) {
             console.error('Error al cargar técnicos:', error);
         }
     }
 
-    // 3. Cargar todos los tickets desde el backend
+    // 3. Cargar estados únicos de los tickets
+    async function cargarEstados() {
+        try {
+            const response = await fetch(`${API_URL}/tickets`);
+            tickets = await response.json();
+
+            // Obtener estados únicos
+            const estadosUnicos = [...new Set(tickets.map(t => t.estado))].sort();
+
+            // Llenar el select de filtro de estados
+            filterEstado.innerHTML = '<option value="Todos">Todos</option>';
+            estadosUnicos.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado;
+                option.textContent = estado;
+                filterEstado.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error al cargar estados:', error);
+        }
+    }
+
+    // 4. Cargar prioridades únicas de los tickets
+    async function cargarPrioridades() {
+        try {
+            const response = await fetch(`${API_URL}/tickets`);
+            tickets = await response.json();
+
+            // Obtener prioridades únicas
+            const prioridadesUnicas = [...new Set(tickets.map(t => t.prioridad))].sort();
+
+            // Llenar el select de filtro de prioridades
+            filterPrioridad.innerHTML = '<option value="Todos">Todos</option>';
+            prioridadesUnicas.forEach(prioridad => {
+                const option = document.createElement('option');
+                option.value = prioridad;
+                option.textContent = prioridad;
+                filterPrioridad.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error al cargar prioridades:', error);
+        }
+    }
+
+    // 5. Cargar todos los tickets desde el backend
     async function cargarTickets() {
         try {
             const response = await fetch(`${API_URL}/tickets`);
-            const tickets = await response.json();
+            tickets = await response.json();
 
             if (response.ok) {
                 renderizarTickets(tickets);
@@ -53,15 +110,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 4. Renderizar tickets en la tabla
+    // 6. Renderizar tickets en la tabla
     function renderizarTickets(tickets) {
         tableBody.innerHTML = '';
 
         tickets.forEach(ticket => {
             const row = document.createElement('tr');
             row.setAttribute('data-ticket-id', ticket.id);
+            row.setAttribute('data-estado', ticket.estado);
+            row.setAttribute('data-prioridad', ticket.prioridad);
 
-            const tecnicoAsignado = ticket.tecnico_id ? obtenerNombreTecnico(ticket.tecnico_id) : '~ Sin asignar ~';
+            const tecnicoAsignado = ticket.tecnico_nombre || (ticket.tecnico_id ? obtenerNombreTecnico(ticket.tecnico_id) : '~ Sin asignar ~');
+            row.setAttribute('data-agente', tecnicoAsignado);
+
             const fechaCreacion = new Date(ticket.fecha_creacion).toLocaleDateString('es-ES');
 
             row.innerHTML = `
@@ -230,5 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ejecución inicial
     cargarTecnicos();
+    cargarEstados();
+    cargarPrioridades();
     cargarTickets();
 });
