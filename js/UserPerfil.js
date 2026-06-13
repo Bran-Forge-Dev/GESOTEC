@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Referencias a elementos de la interfaz
     const logoutSelect = document.querySelector('.logout-select');
+    const ticketsContainer = document.getElementById('ticketsContainer');
 
     // 5. Manejo del cierre de sesión
     logoutSelect.addEventListener('change', (e) => {
@@ -41,7 +42,69 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 6. Efecto visual en los contenedores y botones de acción
+    // 6. Cargar tickets del usuario desde el backend
+    async function cargarTickets() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/usuario/${usuario.id}`);
+            const tickets = await response.json();
+
+            if (response.ok) {
+                renderizarTickets(tickets);
+            } else {
+                console.error('Error al cargar tickets:', tickets);
+            }
+        } catch (error) {
+            console.error('Error al cargar tickets:', error);
+        }
+    }
+
+    // 7. Renderizar tickets en el contenedor
+    function renderizarTickets(tickets) {
+        if (!ticketsContainer) return;
+
+        ticketsContainer.innerHTML = '';
+
+        if (tickets.length === 0) {
+            ticketsContainer.innerHTML = '<p style="text-align: center; color: #999;">No hay tickets activos</p>';
+            return;
+        }
+
+        // Mostrar solo los primeros 5 tickets
+        const ticketsMostrar = tickets.slice(0, 5);
+
+        ticketsMostrar.forEach(ticket => {
+            const ticketRow = document.createElement('div');
+            ticketRow.className = 'ticket-row';
+
+            // Determinar clase del badge según el estado
+            const badgeClass = getBadgeClass(ticket.estado);
+
+            ticketRow.innerHTML = `
+                <p>#${ticket.id} - ${ticket.asunto}</p>
+                <span class="badge ${badgeClass}">${ticket.estado}</span>
+            `;
+
+            ticketsContainer.appendChild(ticketRow);
+        });
+    }
+
+    // 8. Obtener clase del badge según el estado
+    function getBadgeClass(estado) {
+        switch (estado) {
+            case 'Abierto':
+                return 'badge-green';
+            case 'En Progreso':
+            case 'En Proceso':
+                return 'badge-yellow';
+            case 'Cerrado':
+            case 'Resuelto':
+                return 'badge-gray';
+            default:
+                return 'badge-green';
+        }
+    }
+
+    // 9. Efecto visual en los contenedores y botones de acción
     const actionButtons = document.querySelectorAll('.action-btn');
     const ticketItems = document.querySelectorAll('.ticket-item');
 
@@ -67,6 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
             item.style.border = "1px solid #999";
         });
     });
+
+    // 10. Cargar tickets al iniciar
+    cargarTickets();
 
     console.log("Panel de Control del Usuario Final cargado correctamente para:", usuario.nombre);
 });
