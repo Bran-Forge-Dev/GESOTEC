@@ -108,6 +108,41 @@ router.get('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
+// Obtener tickets de un técnico
+router.get('/tecnico/:tecnico_id', async (req, res) => {
+    try {
+        const { tecnico_id } = req.params;
+
+        const { data: tickets, error } = await supabase
+            .from('tickets')
+            .select(`
+                *,
+                usuarios!tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+            `)
+            .eq('tecnico_id', tecnico_id)
+            .order('fecha_creacion', { ascending: false });
+
+        if (error) {
+            console.error('Error al obtener tickets:', error);
+            return res.status(500).json({ error: 'Error al obtener tickets' });
+        }
+
+        // Formatear los tickets para incluir nombres
+        const formattedTickets = tickets.map(ticket => ({
+            ...ticket,
+            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
+        }));
+
+        res.json(formattedTickets);
+
+    } catch (error) {
+        console.error('Error al obtener tickets:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 // Obtener ticket por ID
 router.get('/:id', async (req, res) => {
     try {
