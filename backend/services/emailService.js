@@ -3,10 +3,10 @@ require('dotenv').config();
 
 // Configuración del transporter de Nodemailer para Mailtrap
 const transporter = nodemailer.createTransport({
-    host: process.env.MAILTRAP_HOST || 'sandbox.smtp.mailtrap.io',
-    port: process.env.MAILTRAP_PORT || 2525,
+    host: process.env.MAILTRAP_HOST || 'live.smtp.mailtrap.io',
+    port: process.env.MAILTRAP_PORT || 587,
     auth: {
-        user: process.env.MAILTRAP_USER || '',
+        user: process.env.MAILTRAP_USER || 'api',
         pass: process.env.MAILTRAP_PASS || ''
     }
 });
