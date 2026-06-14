@@ -226,6 +226,7 @@ router.put('/:id', async (req, res) => {
 
         // Si se asignó un técnico nuevo, enviar email y crear notificación
         if (tecnico_id !== undefined && tecnico_id !== existingTicket.tecnico_id) {
+            console.log('Asignando técnico nuevo. tecnico_id:', tecnico_id, 'tecnico anterior:', existingTicket.tecnico_id);
             try {
                 // Obtener datos del técnico
                 const { data: tecnico, error: tecnicoError } = await supabase
@@ -233,6 +234,8 @@ router.put('/:id', async (req, res) => {
                     .select('nombre, apellido, email')
                     .eq('id', tecnico_id)
                     .single();
+
+                console.log('Datos del técnico:', tecnico, 'Error:', tecnicoError);
 
                 if (!tecnicoError && tecnico) {
                     // Enviar email al técnico
@@ -259,17 +262,22 @@ router.put('/:id', async (req, res) => {
                     if (notifError) {
                         console.error('Error al crear notificación:', notifError);
                     } else {
-                        console.log('Notificación creada exitosamente');
+                        console.log('Notificación creada exitosamente para técnico:', tecnico_id);
                     }
+                } else {
+                    console.error('Error al obtener datos del técnico:', tecnicoError);
                 }
             } catch (emailError) {
                 console.error('Error al enviar email o crear notificación:', emailError);
                 // No fallar la actualización si el email falla
             }
+        } else {
+            console.log('No se asignó técnico nuevo o el técnico es el mismo');
         }
 
         // Si el estado cambió, enviar email de actualización al usuario
         if (estado !== undefined && estado !== existingTicket.estado) {
+            console.log('Estado cambió. Nuevo estado:', estado, 'Estado anterior:', existingTicket.estado);
             try {
                 // Obtener datos del usuario
                 const { data: usuario, error: usuarioError } = await supabase
@@ -277,6 +285,8 @@ router.put('/:id', async (req, res) => {
                     .select('nombre, apellido, email')
                     .eq('id', existingTicket.usuario_id)
                     .single();
+
+                console.log('Datos del usuario:', usuario, 'Error:', usuarioError);
 
                 if (!usuarioError && usuario) {
                     // Enviar email al usuario
@@ -303,13 +313,17 @@ router.put('/:id', async (req, res) => {
                     if (notifError) {
                         console.error('Error al crear notificación:', notifError);
                     } else {
-                        console.log('Notificación creada exitosamente');
+                        console.log('Notificación creada exitosamente para usuario:', existingTicket.usuario_id);
                     }
+                } else {
+                    console.error('Error al obtener datos del usuario:', usuarioError);
                 }
             } catch (emailError) {
                 console.error('Error al enviar email de actualización:', emailError);
                 // No fallar la actualización si el email falla
             }
+        } else {
+            console.log('No cambió el estado');
         }
 
         res.json({
