@@ -76,5 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 9. Cargar contador de notificaciones
+    async function cargarContadorNotificaciones() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/notificaciones/usuario/${usuario.id}/contador`);
+            const data = await response.json();
+
+            if (response.ok && data.contador > 0) {
+                const badge = document.getElementById('notificationBadge');
+                if (badge) {
+                    badge.textContent = data.contador;
+                    badge.classList.remove('hidden');
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar contador de notificaciones:', error);
+        }
+    }
+
+    // 10. Cargar notificaciones al iniciar
+    cargarContadorNotificaciones();
+
     console.log("Panel Administrador cargado correctamente para:", usuario.nombre);
 });

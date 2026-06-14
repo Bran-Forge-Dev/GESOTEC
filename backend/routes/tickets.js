@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
+const { enviarEmailTicketAsignado, enviarEmailTicketActualizado } = require('../services/emailService');
 
 // Obtener todos los tickets (solo admin)
 router.get('/', async (req, res) => {
@@ -186,10 +187,10 @@ router.put('/:id', async (req, res) => {
         console.log('Actualizando ticket ID:', id);
         console.log('Datos recibidos:', { asunto, descripcion, prioridad, estado, tecnico_id });
 
-        // Verificar que el ticket existe
+        // Verificar que el ticket existe y obtener datos actuales
         const { data: existingTicket, error: checkError } = await supabase
             .from('tickets')
-            .select('id')
+            .select('*')
             .eq('id', id)
             .single();
 
@@ -222,6 +223,94 @@ router.put('/:id', async (req, res) => {
         }
 
         console.log('Ticket actualizado exitosamente:', updatedTicket);
+
+        // Si se asignó un técnico nuevo, enviar email y crear notificación
+        if (tecnico_id !== undefined && tecnico_id !== existingTicket.tecnico_id) {
+            try {
+                // Obtener datos del técnico
+                const { data: tecnico, error: tecnicoError } = await supabase
+                    .from('usuarios')
+                    .select('nombre, apellido, email')
+                    .eq('id', tecnico_id)
+                    .single();
+
+                if (!tecnicoError && tecnico) {
+                    // Enviar email al técnico
+                    const emailResult = await enviarEmailTicketAsignado(
+                        tecnico.email,
+                        `${tecnico.nombre} ${tecnico.apellido || ''}`,
+                        updatedTicket
+                    );
+
+                    console.log('Resultado de envío de email:', emailResult);
+
+                    // Crear notificación en la base de datos
+                    const { error: notifError } = await supabase
+                        .from('notificaciones')
+                        .insert({
+                            usuario_id: tecnico_id,
+                            tipo: 'ticket_asignado',
+                            titulo: `Nuevo Ticket Asignado #${updatedTicket.id}`,
+                            mensaje: `Se te ha asignado el ticket: ${updatedTicket.asunto}`,
+                            ticket_id: updatedTicket.id,
+                            leida: false
+                        });
+
+                    if (notifError) {
+                        console.error('Error al crear notificación:', notifError);
+                    } else {
+                        console.log('Notificación creada exitosamente');
+                    }
+                }
+            } catch (emailError) {
+                console.error('Error al enviar email o crear notificación:', emailError);
+                // No fallar la actualización si el email falla
+            }
+        }
+
+        // Si el estado cambió, enviar email de actualización al usuario
+        if (estado !== undefined && estado !== existingTicket.estado) {
+            try {
+                // Obtener datos del usuario
+                const { data: usuario, error: usuarioError } = await supabase
+                    .from('usuarios')
+                    .select('nombre, apellido, email')
+                    .eq('id', existingTicket.usuario_id)
+                    .single();
+
+                if (!usuarioError && usuario) {
+                    // Enviar email al usuario
+                    const emailResult = await enviarEmailTicketActualizado(
+                        usuario.email,
+                        `${usuario.nombre} ${usuario.apellido || ''}`,
+                        updatedTicket
+                    );
+
+                    console.log('Resultado de envío de email de actualización:', emailResult);
+
+                    // Crear notificación en la base de datos
+                    const { error: notifError } = await supabase
+                        .from('notificaciones')
+                        .insert({
+                            usuario_id: existingTicket.usuario_id,
+                            tipo: 'ticket_actualizado',
+                            titulo: `Ticket #${updatedTicket.id} Actualizado`,
+                            mensaje: `El estado de tu ticket ha cambiado a: ${estado}`,
+                            ticket_id: updatedTicket.id,
+                            leida: false
+                        });
+
+                    if (notifError) {
+                        console.error('Error al crear notificación:', notifError);
+                    } else {
+                        console.log('Notificación creada exitosamente');
+                    }
+                }
+            } catch (emailError) {
+                console.error('Error al enviar email de actualización:', emailError);
+                // No fallar la actualización si el email falla
+            }
+        }
 
         res.json({
             message: 'Ticket actualizado exitosamente',
