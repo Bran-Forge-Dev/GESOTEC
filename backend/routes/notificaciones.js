@@ -3,10 +3,17 @@ const router = express.Router();
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-// Inicializar cliente de Supabase
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Función para obtener el cliente de Supabase
+function getSupabaseClient() {
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_KEY;
+    
+    if (!supabaseUrl || !supabaseKey) {
+        throw new Error('SUPABASE_URL y SUPABASE_KEY son requeridos');
+    }
+    
+    return createClient(supabaseUrl, supabaseKey);
+}
 
 /**
  * GET /api/notificaciones/usuario/:usuario_id
@@ -15,6 +22,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 router.get('/usuario/:usuario_id', async (req, res) => {
     try {
         const { usuario_id } = req.params;
+        const supabase = getSupabaseClient();
         
         const { data, error } = await supabase
             .from('notificaciones')
@@ -39,6 +47,7 @@ router.get('/usuario/:usuario_id', async (req, res) => {
 router.get('/usuario/:usuario_id/no-leidas', async (req, res) => {
     try {
         const { usuario_id } = req.params;
+        const supabase = getSupabaseClient();
         
         const { data, error } = await supabase
             .from('notificaciones')
@@ -63,6 +72,7 @@ router.get('/usuario/:usuario_id/no-leidas', async (req, res) => {
 router.get('/usuario/:usuario_id/contador', async (req, res) => {
     try {
         const { usuario_id } = req.params;
+        const supabase = getSupabaseClient();
         
         const { count, error } = await supabase
             .from('notificaciones')
@@ -86,6 +96,7 @@ router.get('/usuario/:usuario_id/contador', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const { usuario_id, tipo, titulo, mensaje, ticket_id } = req.body;
+        const supabase = getSupabaseClient();
 
         if (!usuario_id || !tipo || !titulo || !mensaje) {
             return res.status(400).json({ error: 'Faltan campos requeridos' });
@@ -122,6 +133,7 @@ router.post('/', async (req, res) => {
 router.put('/:id/marcar-leida', async (req, res) => {
     try {
         const { id } = req.params;
+        const supabase = getSupabaseClient();
 
         const { data, error } = await supabase
             .from('notificaciones')
@@ -149,6 +161,7 @@ router.put('/:id/marcar-leida', async (req, res) => {
 router.put('/usuario/:usuario_id/marcar-todas-leidas', async (req, res) => {
     try {
         const { usuario_id } = req.params;
+        const supabase = getSupabaseClient();
 
         const { data, error } = await supabase
             .from('notificaciones')
@@ -173,6 +186,7 @@ router.put('/usuario/:usuario_id/marcar-todas-leidas', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        const supabase = getSupabaseClient();
 
         const { error } = await supabase
             .from('notificaciones')
