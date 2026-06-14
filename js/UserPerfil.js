@@ -31,18 +31,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Referencias a elementos de la interfaz
-    const logoutSelect = document.querySelector('.logout-select');
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userInitials = document.getElementById('userInitials');
+    const userName = document.getElementById('userName');
     const ticketsContainer = document.getElementById('ticketsContainer');
 
-    // 5. Manejo del cierre de sesión
-    logoutSelect.addEventListener('change', (e) => {
-        if (e.target.value === 'exit') {
-            localStorage.removeItem('gesotec_user');
-            window.location.href = '../index.html';
+    // 5. Actualizar datos del usuario en el menú
+    if (userInitials && usuario.nombre) {
+        const initials = usuario.nombre.charAt(0).toUpperCase();
+        userInitials.textContent = initials;
+    }
+
+    if (userName && usuario.nombre) {
+        userName.textContent = usuario.nombre + ' ' + (usuario.apellido || '');
+    }
+
+    // 6. Toggle del dropdown del menú de usuario
+    if (userAvatarBtn && userDropdown) {
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+            userAvatarBtn.classList.toggle('active');
+        });
+    }
+
+    // 7. Cerrar dropdown al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (userDropdown && !userDropdown.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+            userDropdown.classList.remove('show');
+            userAvatarBtn.classList.remove('active');
         }
     });
 
-    // 6. Cargar tickets del usuario desde el backend
+    // 8. Manejo del cierre de sesión
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                localStorage.removeItem('gesotec_user');
+                window.location.href = '../index.html';
+            }
+        });
+    }
+
+    // 9. Cargar tickets del usuario desde el backend
     async function cargarTickets() {
         try {
             const response = await fetch(`https://gesotec.onrender.com/api/tickets/usuario/${usuario.id}`);
@@ -58,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 7. Renderizar tickets en el contenedor
+    // 10. Renderizar tickets en el contenedor
     function renderizarTickets(tickets) {
         if (!ticketsContainer) return;
 
@@ -88,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 8. Obtener clase del badge según el estado
+    // 11. Obtener clase del badge según el estado
     function getBadgeClass(estado) {
         switch (estado) {
             case 'Abierto':
@@ -104,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 9. Efecto visual en los contenedores y botones de acción
+    // 12. Efecto visual en los contenedores y botones de acción
     const actionButtons = document.querySelectorAll('.action-btn');
     const ticketItems = document.querySelectorAll('.ticket-item');
 
@@ -131,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 10. Cargar tickets al iniciar
+    // 13. Cargar tickets al iniciar
     cargarTickets();
 
     console.log("Panel de Control del Usuario Final cargado correctamente para:", usuario.nombre);

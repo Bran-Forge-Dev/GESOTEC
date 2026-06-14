@@ -31,24 +31,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Referencias a elementos de la interfaz
-    const logoutSelect = document.querySelector('.logout-select');
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userInitials = document.getElementById('userInitials');
+    const userName = document.getElementById('userName');
 
-    // 5. Manejo del cierre de sesión
-    if (logoutSelect) {
-        logoutSelect.addEventListener('change', (e) => {
-            if (e.target.value === 'exit') {
-                const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
-                if (confirmar) {
-                    localStorage.removeItem('gesotec_user');
-                    window.location.href = "../index.html";
-                } else {
-                    e.target.value = "";
-                }
+    // 5. Actualizar datos del usuario en el menú
+    if (userInitials && usuario.nombre) {
+        const initials = usuario.nombre.charAt(0).toUpperCase();
+        userInitials.textContent = initials;
+    }
+
+    if (userName && usuario.nombre) {
+        userName.textContent = usuario.nombre + ' ' + (usuario.apellido || '');
+    }
+
+    // 6. Toggle del dropdown del menú de usuario
+    if (userAvatarBtn && userDropdown) {
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+            userAvatarBtn.classList.toggle('active');
+        });
+    }
+
+    // 7. Cerrar dropdown al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (userDropdown && !userDropdown.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+            userDropdown.classList.remove('show');
+            userAvatarBtn.classList.remove('active');
+        }
+    });
+
+    // 8. Manejo del cierre de sesión
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                localStorage.removeItem('gesotec_user');
+                window.location.href = "../index.html";
             }
         });
     }
 
-    // 6. Efecto visual en las tarjetas
+    // 9. Efecto visual en las tarjetas
     const cards = document.querySelectorAll('.card-item');
     cards.forEach(card => {
         card.addEventListener('mouseenter', () => {
