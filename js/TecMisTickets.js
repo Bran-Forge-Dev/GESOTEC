@@ -85,7 +85,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Cargar tickets al iniciar
+    // 5. Modal de detalles del ticket
+    const modal = document.getElementById('ticketModal');
+    const closeModal = document.getElementById('closeModal');
+
+    // Función para mostrar detalles del ticket
+    async function mostrarDetallesTicket(ticketId) {
+        try {
+            const response = await fetch(`${API_URL}/tickets/${ticketId}`);
+            const ticket = await response.json();
+
+            if (response.ok) {
+                // Llenar el modal con los datos del ticket
+                document.getElementById('modalTicketId').textContent = `#${ticket.id}`;
+                document.getElementById('modalAsunto').textContent = ticket.asunto;
+                document.getElementById('modalDescripcion').textContent = ticket.descripcion;
+                document.getElementById('modalPrioridad').textContent = ticket.prioridad;
+                document.getElementById('modalEstado').textContent = ticket.estado;
+
+                const fechaCreacion = new Date(ticket.fecha_creacion).toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('modalFechaCreacion').textContent = fechaCreacion;
+
+                const fechaActualizacion = new Date(ticket.fecha_actualizacion).toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('modalFechaActualizacion').textContent = fechaActualizacion;
+
+                // Mostrar el modal
+                modal.style.display = 'flex';
+            } else {
+                alert('Error al cargar detalles del ticket');
+            }
+        } catch (error) {
+            console.error('Error al cargar detalles del ticket:', error);
+            alert('Error de conexión con el servidor');
+        }
+    }
+
+    // Event listeners para los botones de "Ver Detalles"
+    tableBody.addEventListener('click', (e) => {
+        if (e.target.classList.contains('link-details') || e.target.closest('.link-details')) {
+            e.preventDefault();
+            const btn = e.target.classList.contains('link-details') ? e.target : e.target.closest('.link-details');
+            const ticketId = btn.getAttribute('data-ticket-id');
+            mostrarDetallesTicket(ticketId);
+        }
+    });
+
+    // Cerrar modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Cerrar modal al hacer clic fuera del contenido
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // 6. Cargar tickets al iniciar
     cargarTickets();
 
     console.log("Panel de Mis Tickets (Técnico) inicializado.");

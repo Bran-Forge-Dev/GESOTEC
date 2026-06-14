@@ -96,6 +96,47 @@
             </main>
         </div>
     </div>
+
+    <!-- Modal de Detalles del Ticket -->
+    <div id="ticketModal" class="ticket-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del Ticket</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-row">
+                    <label>ID del Ticket:</label>
+                    <span id="modalTicketId"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Asunto:</label>
+                    <span id="modalAsunto"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Descripción:</label>
+                    <p id="modalDescripcion"></p>
+                </div>
+                <div class="detail-row">
+                    <label>Prioridad:</label>
+                    <span id="modalPrioridad"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Estado:</label>
+                    <span id="modalEstado"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Fecha de Creación:</label>
+                    <span id="modalFechaCreacion"></span>
+                </div>
+                <div class="detail-row">
+                    <label>Última Actualización:</label>
+                    <span id="modalFechaActualizacion"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/TecMisTickets.js"></script>
 </body>
 </html>
