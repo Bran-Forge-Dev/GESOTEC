@@ -246,12 +246,6 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 - **Brandon Salinas** - Desarrollador Principal
 - **GESOTEC Team** - Equipo de Desarrollo
 
-## 📞 Soporte
-
-Para soporte técnico o preguntas:
-- Email: soporte@gesotec.com
-- Issues: [GitHub Issues](https://github.com/Bran-Forge-Dev/GESOTEC/issues)
-
 ---
 
 **GESOTEC** - Optimizando la gestión de soporte técnico con tecnología moderna.
