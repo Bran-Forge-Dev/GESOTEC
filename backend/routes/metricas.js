@@ -185,7 +185,7 @@ router.get('/tecnicos', async (req, res) => {
             // Tickets asignados (sin filtro de fecha para contar todos)
             const { data: allTickets, error: ticketsError } = await supabase
                 .from('tickets')
-                .select('id, estado, fecha_creacion, tecnico_id')
+                .select('id, estado, fecha_creacion, tecnico_id, calificacion')
                 .eq('tecnico_id', tecnico.id);
 
             if (ticketsError) {
@@ -211,8 +211,11 @@ router.get('/tecnicos', async (req, res) => {
 
             const ticketsResueltosPeriodo = tickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
             
-            // Calificación promedio (no disponible sin columna calificacion)
-            const calificacionPromedio = null;
+            // Calificación promedio
+            const ticketsConCalificacion = allTickets?.filter(t => t.calificacion) || [];
+            const calificacionPromedio = ticketsConCalificacion.length > 0
+                ? ticketsConCalificacion.reduce((sum, t) => sum + t.calificacion, 0) / ticketsConCalificacion.length
+                : null;
 
             // Tiempo promedio de resolución (no disponible sin fecha_resolucion)
             const tiempoPromedio = null;

@@ -208,3 +208,43 @@
     margin: 0;
     line-height: 1.5;
 }
+
+/* ESTRELLAS DE CALIFICACIÓN */
+.rating-stars {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.star {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star.active {
+    color: #f1c40f;
+}
+
+.btn-submit-rating {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-submit-rating:hover {
+    background-color: #1565c0;
+}
+
+.btn-submit-rating:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

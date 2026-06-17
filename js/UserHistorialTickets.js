@@ -84,10 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Modal de detalles del ticket
     const modal = document.getElementById('ticketModal');
     const closeModal = document.getElementById('closeModal');
+    let currentTicketId = null;
+    let selectedRating = 0;
 
     // Función para mostrar detalles del ticket
     async function mostrarDetallesTicket(ticketId) {
         try {
+            currentTicketId = ticketId;
             const response = await fetch(`https://gesotec.onrender.com/api/tickets/${ticketId}`);
             const ticket = await response.json();
 
@@ -117,6 +120,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 document.getElementById('modalFechaActualizacion').textContent = fechaActualizacion;
 
+                // Mostrar sección de calificación solo si el ticket está resuelto y no tiene calificación
+                const calificacionSection = document.getElementById('calificacionSection');
+                const calificacionActualSection = document.getElementById('calificacionActualSection');
+                const modalCalificacion = document.getElementById('modalCalificacion');
+
+                if (ticket.estado === 'Resuelto' || ticket.estado === 'Cerrado') {
+                    if (ticket.calificacion) {
+                        // Ya tiene calificación, mostrarla
+                        calificacionSection.style.display = 'none';
+                        calificacionActualSection.style.display = 'flex';
+                        modalCalificacion.textContent = `${ticket.calificacion} ⭐`;
+                    } else {
+                        // No tiene calificación, mostrar formulario
+                        calificacionSection.style.display = 'flex';
+                        calificacionActualSection.style.display = 'none';
+                        resetRatingStars();
+                    }
+                } else {
+                    // No está resuelto, ocultar ambas secciones
+                    calificacionSection.style.display = 'none';
+                    calificacionActualSection.style.display = 'none';
+                }
+
                 // Mostrar el modal
                 modal.style.display = 'flex';
             } else {
@@ -127,6 +153,63 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Error de conexión con el servidor');
         }
     }
+
+    // Función para resetear las estrellas
+    function resetRatingStars() {
+        selectedRating = 0;
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.classList.remove('active');
+        });
+    }
+
+    // Manejar selección de estrellas
+    document.getElementById('ratingStars').addEventListener('click', (e) => {
+        if (e.target.classList.contains('star')) {
+            const rating = parseInt(e.target.getAttribute('data-rating'));
+            selectedRating = rating;
+            
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+    });
+
+    // Enviar calificación
+    document.getElementById('submitRating').addEventListener('click', async () => {
+        if (selectedRating === 0) {
+            alert('Por favor selecciona una calificación');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/${currentTicketId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    calificacion: selectedRating
+                })
+            });
+
+            if (response.ok) {
+                alert('Calificación enviada correctamente');
+                // Recargar detalles del ticket
+                mostrarDetallesTicket(currentTicketId);
+            } else {
+                alert('Error al enviar calificación');
+            }
+        } catch (error) {
+            console.error('Error al enviar calificación:', error);
+            alert('Error de conexión con el servidor');
+        }
+    });
 
     // Event listeners para los botones de "Ver"
     tableBody.addEventListener('click', (e) => {

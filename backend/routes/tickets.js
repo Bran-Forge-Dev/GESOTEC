@@ -182,10 +182,10 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { asunto, descripcion, prioridad, estado, tecnico_id } = req.body;
+        const { asunto, descripcion, prioridad, estado, tecnico_id, calificacion } = req.body;
 
         console.log('Actualizando ticket ID:', id);
-        console.log('Datos recibidos:', { asunto, descripcion, prioridad, estado, tecnico_id });
+        console.log('Datos recibidos:', { asunto, descripcion, prioridad, estado, tecnico_id, calificacion });
 
         // Verificar que el ticket existe y obtener datos actuales
         const { data: existingTicket, error: checkError } = await supabase
@@ -206,6 +206,7 @@ router.put('/:id', async (req, res) => {
         if (prioridad !== undefined) updateData.prioridad = prioridad;
         if (estado !== undefined) updateData.estado = estado;
         if (tecnico_id !== undefined) updateData.tecnico_id = tecnico_id;
+        if (calificacion !== undefined) updateData.calificacion = calificacion;
         updateData.fecha_actualizacion = new Date().toISOString();
 
         console.log('Datos a actualizar:', updateData);
