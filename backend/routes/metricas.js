@@ -190,6 +190,7 @@ router.get('/tecnicos', async (req, res) => {
 
             const ticketsAtendidos = tickets?.length || 0;
             const ticketsResueltos = tickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
+            const ticketsEnProceso = tickets?.filter(t => t.estado === 'En Progreso').length || 0;
             
             // Calificación promedio
             const ticketsConCalificacion = tickets?.filter(t => t.calificacion) || [];
@@ -216,6 +217,7 @@ router.get('/tecnicos', async (req, res) => {
             return {
                 nombre: `${tecnico.nombre} ${tecnico.apellido || ''}`,
                 tickets_atendidos: ticketsAtendidos,
+                tickets_en_proceso: ticketsEnProceso,
                 calificacion_promedio: calificacionPromedio,
                 tiempo_promedio: tiempoPromedio ? Math.round(tiempoPromedio) : null,
                 tasa_resolucion: tasaResolucion

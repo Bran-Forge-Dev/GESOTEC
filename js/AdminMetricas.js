@@ -466,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr>
                     <td>${item.nombre}</td>
                     <td>${item.tickets_atendidos}</td>
+                    <td>${item.tickets_en_proceso || 0}</td>
                     <td>${item.calificacion_promedio ? item.calificacion_promedio.toFixed(1) + ' ⭐' : 'N/A'}</td>
                     <td>${item.tiempo_promedio ? formatearTiempoResolucion(item.tiempo_promedio) : 'N/A'}</td>
                     <td>${item.tasa_resolucion ? item.tasa_resolucion.toFixed(1) + '%' : 'N/A'}</td>
