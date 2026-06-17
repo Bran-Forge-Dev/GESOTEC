@@ -8,6 +8,7 @@ const userRoutes = require('./routes/users');
 const ticketRoutes = require('./routes/tickets');
 const tareaRoutes = require('./routes/tareas');
 const notificacionRoutes = require('./routes/notificaciones');
+const metricasRoutes = require('./routes/metricas');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/tareas', tareaRoutes);
 app.use('/api/notificaciones', notificacionRoutes);
+app.use('/api/metricas', metricasRoutes);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {

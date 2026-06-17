@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Métricas y Estadísticas</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/AdminMetricas.css">
+    <link rel="stylesheet" href="../css/user-menu.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="AdminPerfil.html" class="nav-item">
+                        <span class="nav-icon">📊</span> Panel de Control
+                    </a>
+                    <a href="AdminMetricas.html" class="nav-item active">
+                        <span class="nav-icon">📈</span> Métricas
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="metrics-main-container">
+                    
+                    <section class="metrics-top-header">
+                        <div class="metrics-user-info">
+                            <div class="avatar-circle">👤</div>
+                            <h2>Administrador</h2>
+                            <div class="info-details-box">
+                                <p><strong>Nombre:</strong> Brandon Salinas</p>
+                                <p><strong>Correo:</strong> brandon.salinas@gesotec.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="metrics-logout-control">
+                            <div class="user-menu-container" id="userMenu">
+                                <div class="user-avatar-button" id="userAvatarBtn">
+                                    <div class="user-avatar-circle" id="userInitials">A">
+                                        <span class="notification-badge hidden" id="notificationBadge">0</span>
+                                    </div>
+                                    <div class="user-info-display">
+                                        <span class="user-name-display" id="userName">Admin</span>
+                                        <span class="user-role-display">Administrador</span>
+                                    </div>
+                                    <svg class="dropdown-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 8L10 13L15 8" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="user-menu-dropdown" id="userDropdown">
+                                    <a href="AdminPerfil.html" class="user-menu-item">
+                                        <svg class="user-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#666"/>
+                                        </svg>
+                                        <span class="user-menu-text">Perfil</span>
+                                    </a>
+                                    <a href="#" class="user-menu-item danger" id="logoutBtn">
+                                        <svg class="user-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M17 7L15.59 8.41L18.17 11H9V13H18.17L15.59 15.58L17 17L22 12L17 7ZM4 5H12V3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H12V19H4V5Z" fill="#d32f2f"/>
+                                        </svg>
+                                        <span class="user-menu-text">Cerrar Sesión</span>
+                                    </a>
+                                </div>
+                                <div class="notifications-dropdown" id="notificationsDropdown">
+                                    <div class="notifications-header">
+                                        <h3>Notificaciones</h3>
+                                        <button class="mark-all-read-btn" id="markAllReadBtn">Marcar todas como leídas</button>
+                                    </div>
+                                    <div class="notifications-list" id="notificationsList">
+                                        <!-- Las notificaciones se cargarán dinámicamente -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <h3 class="panel-subtitle">Métricas y Estadísticas del Help Desk</h3>
+
+                    <!-- Filtros de tiempo -->
+                    <div class="metrics-filters">
+                        <div class="filter-group">
+                            <label for="timeRange">Rango de tiempo:</label>
+                            <select id="timeRange">
+                                <option value="week">Última semana</option>
+                                <option value="month" selected>Último mes</option>
+                                <option value="quarter">Último trimestre</option>
+                                <option value="year">Último año</option>
+                            </select>
+                        </div>
+                        <button class="btn-refresh" id="refreshBtn">
+                            <span>🔄</span> Actualizar
+                        </button>
+                    </div>
+
+                    <!-- KPIs Principales -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card kpi-blue">
+                            <div class="kpi-icon">📊</div>
+                            <div class="kpi-content">
+                                <h4>Total Tickets</h4>
+                                <p class="kpi-value" id="totalTickets">0</p>
+                                <p class="kpi-trend" id="ticketsTrend">--</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card kpi-green">
+                            <div class="kpi-icon">✅</div>
+                            <div class="kpi-content">
+                                <h4>Resueltos</h4>
+                                <p class="kpi-value" id="resolvedTickets">0</p>
+                                <p class="kpi-trend" id="resolvedTrend">--</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card kpi-yellow">
+                            <div class="kpi-icon">⏳</div>
+                            <div class="kpi-content">
+                                <h4>En Proceso</h4>
+                                <p class="kpi-value" id="inProgressTickets">0</p>
+                                <p class="kpi-trend" id="inProgressTrend">--</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card kpi-red">
+                            <div class="kpi-icon">📋</div>
+                            <div class="kpi-content">
+                                <h4>Backlog</h4>
+                                <p class="kpi-value" id="backlogTickets">0</p>
+                                <p class="kpi-trend" id="backlogTrend">--</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos y Tablas -->
+                    <div class="metrics-content-grid">
+                        <!-- Volumen de Tickets -->
+                        <div class="metrics-section">
+                            <h4>📊 Volumen de Tickets</h4>
+                            <div class="metrics-chart-container">
+                                <canvas id="volumeChart"></canvas>
+                            </div>
+                            <div class="metrics-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Período</th>
+                                            <th>Tickets Creados</th>
+                                            <th>Tendencia</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="volumeTableBody">
+                                        <!-- Datos dinámicos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Clasificación de Problemas -->
+                        <div class="metrics-section">
+                            <h4>🔍 Clasificación de Problemas</h4>
+                            <div class="metrics-chart-container">
+                                <canvas id="classificationChart"></canvas>
+                            </div>
+                            <div class="metrics-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="classificationTableBody">
+                                        <!-- Datos dinámicos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Desempeño de Técnicos -->
+                        <div class="metrics-section full-width">
+                            <h4>👨‍💻 Desempeño de Técnicos</h4>
+                            <div class="metrics-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Técnico</th>
+                                            <th>Tickets Atendidos</th>
+                                            <th>Calificación Promedio</th>
+                                            <th>Tiempo Promedio Resolución</th>
+                                            <th>Tasa de Resolución</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="techniciansTableBody">
+                                        <!-- Datos dinámicos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Estado de Tickets -->
+                        <div class="metrics-section">
+                            <h4>📋 Estado de Tickets</h4>
+                            <div class="metrics-chart-container">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                            <div class="metrics-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Estado</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="statusTableBody">
+                                        <!-- Datos dinámicos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Distribución por Departamento -->
+                        <div class="metrics-section">
+                            <h4>🏢 Distribución por Departamento</h4>
+                            <div class="metrics-chart-container">
+                                <canvas id="departmentChart"></canvas>
+                            </div>
+                            <div class="metrics-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Departamento</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="departmentTableBody">
+                                        <!-- Datos dinámicos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/AdminMetricas.js"></script>
+</body>
+</html>
