@@ -186,8 +186,13 @@ router.get('/tecnicos', async (req, res) => {
                 .select('id, estado, fecha_creacion, fecha_resolucion, calificacion')
                 .eq('tecnico_id', tecnico.id);
 
+            console.log(`Técnico: ${tecnico.nombre}, Total tickets: ${allTickets?.length || 0}`);
+            console.log('Estados de tickets:', allTickets?.map(t => t.estado));
+
             const ticketsAtendidos = allTickets?.length || 0;
             const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Progreso').length || 0;
+            
+            console.log(`Tickets atendidos: ${ticketsAtendidos}, Tickets en proceso: ${ticketsEnProceso}`);
             
             // Tickets en el rango de fechas para métricas de tiempo
             const { data: tickets } = await supabase
