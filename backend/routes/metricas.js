@@ -185,7 +185,7 @@ router.get('/tecnicos', async (req, res) => {
             // Tickets asignados (sin filtro de fecha para contar todos)
             const { data: allTickets, error: ticketsError } = await supabase
                 .from('tickets')
-                .select('id, estado, fecha_creacion, fecha_resolucion, calificacion, tecnico_id')
+                .select('id, estado, fecha_creacion, calificacion, tecnico_id')
                 .eq('tecnico_id', tecnico.id);
 
             if (ticketsError) {
@@ -204,7 +204,7 @@ router.get('/tecnicos', async (req, res) => {
             // Tickets en el rango de fechas para métricas de tiempo
             const { data: tickets } = await supabase
                 .from('tickets')
-                .select('id, estado, fecha_creacion, fecha_resolucion, calificacion')
+                .select('id, estado, fecha_creacion, calificacion')
                 .eq('tecnico_id', tecnico.id)
                 .gte('fecha_creacion', inicio.toISOString())
                 .lte('fecha_creacion', fin.toISOString());
@@ -217,16 +217,8 @@ router.get('/tecnicos', async (req, res) => {
                 ? ticketsConCalificacion.reduce((sum, t) => sum + t.calificacion, 0) / ticketsConCalificacion.length
                 : null;
 
-            // Tiempo promedio de resolución
-            const ticketsResueltosConTiempo = tickets?.filter(t => 
-                ['Resuelto', 'Cerrado'].includes(t.estado) && t.fecha_resolucion
-            ) || [];
-            const tiempoPromedio = ticketsResueltosConTiempo.length > 0
-                ? ticketsResueltosConTiempo.reduce((sum, t) => {
-                    const diff = new Date(t.fecha_resolucion) - new Date(t.fecha_creacion);
-                    return sum + (diff / (1000 * 60)); // en minutos
-                }, 0) / ticketsResueltosConTiempo.length
-                : null;
+            // Tiempo promedio de resolución (no disponible sin fecha_resolucion)
+            const tiempoPromedio = null;
 
             // Tasa de resolución
             const tasaResolucion = ticketsAtendidos > 0 
@@ -296,7 +288,7 @@ router.get('/departamento', async (req, res) => {
 
         const { data: tickets, error } = await supabase
             .from('tickets')
-            .select('departamento')
+            .select('usuario_id')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
 
@@ -305,10 +297,28 @@ router.get('/departamento', async (req, res) => {
             return res.status(500).json({ error: 'Error al obtener distribución por departamento' });
         }
 
+        // Obtener usuarios para obtener sus departamentos
+        const userIds = [...new Set(tickets.map(t => t.usuario_id))];
+        const { data: usuarios, error: usuariosError } = await supabase
+            .from('usuarios')
+            .select('id, departamento')
+            .in('id', userIds);
+
+        if (usuariosError) {
+            console.error('Error al obtener usuarios:', usuariosError);
+            return res.status(500).json({ error: 'Error al obtener usuarios' });
+        }
+
+        // Crear mapa de usuario a departamento
+        const usuarioDepartamento = {};
+        usuarios.forEach(u => {
+            usuarioDepartamento[u.id] = u.departamento || 'Sin departamento';
+        });
+
         // Agrupar por departamento
         const departamentos = {};
         tickets.forEach(ticket => {
-            const depto = ticket.departamento || ticket.usuarios?.departamento || 'Sin departamento';
+            const depto = usuarioDepartamento[ticket.usuario_id] || 'Sin departamento';
             departamentos[depto] = (departamentos[depto] || 0) + 1;
         });
 
