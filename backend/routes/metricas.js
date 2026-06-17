@@ -197,7 +197,7 @@ router.get('/tecnicos', async (req, res) => {
             console.log('tecnico_id de tickets:', allTickets?.map(t => t.tecnico_id));
 
             const ticketsResueltos = allTickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
-            const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Progreso').length || 0;
+            const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Proceso').length || 0;
             
             console.log(`Tickets resueltos: ${ticketsResueltos}, Tickets en proceso: ${ticketsEnProceso}`);
             
