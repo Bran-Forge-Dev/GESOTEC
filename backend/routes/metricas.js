@@ -180,7 +180,16 @@ router.get('/tecnicos', async (req, res) => {
 
         // Para cada técnico, obtener sus métricas
         const datos = await Promise.all(tecnicos.map(async (tecnico) => {
-            // Tickets asignados
+            // Tickets asignados (sin filtro de fecha para contar todos)
+            const { data: allTickets } = await supabase
+                .from('tickets')
+                .select('id, estado, fecha_creacion, fecha_resolucion, calificacion')
+                .eq('tecnico_id', tecnico.id);
+
+            const ticketsAtendidos = allTickets?.length || 0;
+            const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Progreso').length || 0;
+            
+            // Tickets en el rango de fechas para métricas de tiempo
             const { data: tickets } = await supabase
                 .from('tickets')
                 .select('id, estado, fecha_creacion, fecha_resolucion, calificacion')
@@ -188,9 +197,7 @@ router.get('/tecnicos', async (req, res) => {
                 .gte('fecha_creacion', inicio.toISOString())
                 .lte('fecha_creacion', fin.toISOString());
 
-            const ticketsAtendidos = tickets?.length || 0;
             const ticketsResueltos = tickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
-            const ticketsEnProceso = tickets?.filter(t => t.estado === 'En Progreso').length || 0;
             
             // Calificación promedio
             const ticketsConCalificacion = tickets?.filter(t => t.calificacion) || [];
