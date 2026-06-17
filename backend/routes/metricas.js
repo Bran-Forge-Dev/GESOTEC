@@ -180,14 +180,21 @@ router.get('/tecnicos', async (req, res) => {
 
         // Para cada técnico, obtener sus métricas
         const datos = await Promise.all(tecnicos.map(async (tecnico) => {
+            console.log(`Buscando tickets para técnico ID: ${tecnico.id}, Nombre: ${tecnico.nombre}`);
+            
             // Tickets asignados (sin filtro de fecha para contar todos)
-            const { data: allTickets } = await supabase
+            const { data: allTickets, error: ticketsError } = await supabase
                 .from('tickets')
-                .select('id, estado, fecha_creacion, fecha_resolucion, calificacion')
+                .select('id, estado, fecha_creacion, fecha_resolucion, calificacion, tecnico_id')
                 .eq('tecnico_id', tecnico.id);
+
+            if (ticketsError) {
+                console.error(`Error al obtener tickets para técnico ${tecnico.nombre}:`, ticketsError);
+            }
 
             console.log(`Técnico: ${tecnico.nombre}, Total tickets: ${allTickets?.length || 0}`);
             console.log('Estados de tickets:', allTickets?.map(t => t.estado));
+            console.log('tecnico_id de tickets:', allTickets?.map(t => t.tecnico_id));
 
             const ticketsAtendidos = allTickets?.length || 0;
             const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Progreso').length || 0;
@@ -289,10 +296,7 @@ router.get('/departamento', async (req, res) => {
 
         const { data: tickets, error } = await supabase
             .from('tickets')
-            .select(`
-                departamento,
-                usuarios (departamento)
-            `)
+            .select('departamento')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
 
