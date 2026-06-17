@@ -88,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Modal de detalles del ticket
     const modal = document.getElementById('ticketModal');
     const closeModal = document.getElementById('closeModal');
+    const btnCancelar = document.getElementById('btnCancelar');
+    const btnGuardarEstado = document.getElementById('btnGuardarEstado');
+    const nuevoEstadoSelect = document.getElementById('nuevoEstado');
+    let currentTicketId = null;
 
     // Función para mostrar detalles del ticket
     async function mostrarDetallesTicket(ticketId) {
@@ -96,12 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const ticket = await response.json();
 
             if (response.ok) {
+                currentTicketId = ticketId;
                 // Llenar el modal con los datos del ticket
                 document.getElementById('modalTicketId').textContent = `#${ticket.id}`;
                 document.getElementById('modalAsunto').textContent = ticket.asunto;
                 document.getElementById('modalDescripcion').textContent = ticket.descripcion;
                 document.getElementById('modalPrioridad').textContent = ticket.prioridad;
                 document.getElementById('modalEstado').textContent = ticket.estado;
+                
+                // Establecer el estado actual en el selector
+                nuevoEstadoSelect.value = ticket.estado;
 
                 const fechaCreacion = new Date(ticket.fecha_creacion).toLocaleDateString('es-ES', {
                     day: 'numeric',
@@ -130,6 +138,47 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error al cargar detalles del ticket:', error);
             alert('Error de conexión con el servidor');
         }
+    }
+
+    // Función para actualizar el estado del ticket
+    async function actualizarEstadoTicket(ticketId, nuevoEstado) {
+        try {
+            const response = await fetch(`${API_URL}/tickets/${ticketId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ estado: nuevoEstado })
+            });
+
+            if (response.ok) {
+                alert('Estado del ticket actualizado correctamente');
+                modal.style.display = 'none';
+                cargarTickets(); // Recargar la tabla
+            } else {
+                alert('Error al actualizar el estado del ticket');
+            }
+        } catch (error) {
+            console.error('Error al actualizar estado del ticket:', error);
+            alert('Error de conexión con el servidor');
+        }
+    }
+
+    // Event listener para el botón de guardar
+    if (btnGuardarEstado) {
+        btnGuardarEstado.addEventListener('click', () => {
+            const nuevoEstado = nuevoEstadoSelect.value;
+            if (currentTicketId && nuevoEstado) {
+                actualizarEstadoTicket(currentTicketId, nuevoEstado);
+            }
+        });
+    }
+
+    // Event listener para el botón de cancelar
+    if (btnCancelar) {
+        btnCancelar.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
     }
 
     // Event listeners para los botones de "Ver Detalles"
