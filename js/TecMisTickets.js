@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Modal de detalles del ticket
     const modal = document.getElementById('ticketModal');
     const closeModal = document.getElementById('closeModal');
-    const btnCancelar = document.getElementById('btnCancelar');
-    const btnGuardarEstado = document.getElementById('btnGuardarEstado');
-    const nuevoEstadoSelect = document.getElementById('nuevoEstado');
+    const modalNuevoEstado = document.getElementById('modalNuevoEstado');
+    const guardarEstadoBtn = document.getElementById('guardarEstado');
+    const cancelarCambioBtn = document.getElementById('cancelarCambio');
     let currentTicketId = null;
 
     // Función para mostrar detalles del ticket
@@ -101,15 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 currentTicketId = ticketId;
+                
                 // Llenar el modal con los datos del ticket
                 document.getElementById('modalTicketId').textContent = `#${ticket.id}`;
                 document.getElementById('modalAsunto').textContent = ticket.asunto;
                 document.getElementById('modalDescripcion').textContent = ticket.descripcion;
                 document.getElementById('modalPrioridad').textContent = ticket.prioridad;
                 document.getElementById('modalEstado').textContent = ticket.estado;
-                
-                // Establecer el estado actual en el selector
-                nuevoEstadoSelect.value = ticket.estado;
+
+                // Resetear el dropdown de estado
+                modalNuevoEstado.value = '';
 
                 const fechaCreacion = new Date(ticket.fecha_creacion).toLocaleDateString('es-ES', {
                     day: 'numeric',
@@ -152,11 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                alert('Estado del ticket actualizado correctamente');
+                alert('Estado del ticket actualizado exitosamente');
                 modal.style.display = 'none';
-                cargarTickets(); // Recargar la tabla
+                cargarTickets(); // Recargar la tabla de tickets
             } else {
-                alert('Error al actualizar el estado del ticket');
+                const error = await response.json();
+                alert('Error al actualizar el estado: ' + (error.error || 'Error desconocido'));
             }
         } catch (error) {
             console.error('Error al actualizar estado del ticket:', error);
@@ -164,22 +166,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event listener para el botón de guardar
-    if (btnGuardarEstado) {
-        btnGuardarEstado.addEventListener('click', () => {
-            const nuevoEstado = nuevoEstadoSelect.value;
-            if (currentTicketId && nuevoEstado) {
-                actualizarEstadoTicket(currentTicketId, nuevoEstado);
-            }
-        });
-    }
+    // Event listener para guardar el cambio de estado
+    guardarEstadoBtn.addEventListener('click', () => {
+        const nuevoEstado = modalNuevoEstado.value;
+        
+        if (!nuevoEstado) {
+            alert('Por favor, selecciona un nuevo estado');
+            return;
+        }
 
-    // Event listener para el botón de cancelar
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-    }
+        if (!currentTicketId) {
+            alert('Error: No hay ticket seleccionado');
+            return;
+        }
+
+        const confirmar = confirm(`¿Estás seguro de cambiar el estado del ticket #${currentTicketId} a "${nuevoEstado}"?`);
+        if (confirmar) {
+            actualizarEstadoTicket(currentTicketId, nuevoEstado);
+        }
+    });
+
+    // Event listener para cancelar el cambio
+    cancelarCambioBtn.addEventListener('click', () => {
+        modalNuevoEstado.value = '';
+    });
 
     // Event listeners para los botones de "Ver Detalles"
     tableBody.addEventListener('click', (e) => {

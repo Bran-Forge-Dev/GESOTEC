@@ -122,12 +122,13 @@
                     <span id="modalPrioridad"></span>
                 </div>
                 <div class="detail-row">
-                    <label>Estado Actual:</label>
+                    <label>Estado:</label>
                     <span id="modalEstado"></span>
                 </div>
                 <div class="detail-row">
-                    <label for="nuevoEstado">Cambiar Estado:</label>
-                    <select id="nuevoEstado">
+                    <label>Cambiar Estado:</label>
+                    <select id="modalNuevoEstado">
+                        <option value="">-- Seleccionar nuevo estado --</option>
                         <option value="Abierto">Abierto</option>
                         <option value="En Progreso">En Progreso</option>
                         <option value="Resuelto">Resuelto</option>
@@ -144,8 +145,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-cancel" id="btnCancelar">Cancelar</button>
-                <button class="btn-save" id="btnGuardarEstado">Guardar Cambio</button>
+                <button class="btn-cancel" id="cancelarCambio">Cancelar</button>
+                <button class="btn-save" id="guardarEstado">Guardar Cambio</button>
             </div>
         </div>
     </div>
