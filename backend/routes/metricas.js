@@ -196,10 +196,10 @@ router.get('/tecnicos', async (req, res) => {
             console.log('Estados de tickets:', allTickets?.map(t => t.estado));
             console.log('tecnico_id de tickets:', allTickets?.map(t => t.tecnico_id));
 
-            const ticketsAtendidos = allTickets?.length || 0;
+            const ticketsResueltos = allTickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
             const ticketsEnProceso = allTickets?.filter(t => t.estado === 'En Progreso').length || 0;
             
-            console.log(`Tickets atendidos: ${ticketsAtendidos}, Tickets en proceso: ${ticketsEnProceso}`);
+            console.log(`Tickets resueltos: ${ticketsResueltos}, Tickets en proceso: ${ticketsEnProceso}`);
             
             // Tickets en el rango de fechas para métricas de tiempo
             const { data: tickets } = await supabase
@@ -209,7 +209,7 @@ router.get('/tecnicos', async (req, res) => {
                 .gte('fecha_creacion', inicio.toISOString())
                 .lte('fecha_creacion', fin.toISOString());
 
-            const ticketsResueltos = tickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
+            const ticketsResueltosPeriodo = tickets?.filter(t => ['Resuelto', 'Cerrado'].includes(t.estado)).length || 0;
             
             // Calificación promedio (no disponible sin columna calificacion)
             const calificacionPromedio = null;
@@ -218,13 +218,13 @@ router.get('/tecnicos', async (req, res) => {
             const tiempoPromedio = null;
 
             // Tasa de resolución
-            const tasaResolucion = ticketsAtendidos > 0 
-                ? (ticketsResueltos / ticketsAtendidos) * 100 
+            const tasaResolucion = ticketsResueltos > 0 
+                ? (ticketsResueltos / (ticketsResueltos + ticketsEnProceso)) * 100 
                 : null;
 
             return {
                 nombre: `${tecnico.nombre} ${tecnico.apellido || ''}`,
-                tickets_atendidos: ticketsAtendidos,
+                tickets_atendidos: ticketsResueltos,
                 tickets_en_proceso: ticketsEnProceso,
                 calificacion_promedio: calificacionPromedio,
                 tiempo_promedio: tiempoPromedio ? Math.round(tiempoPromedio) : null,
