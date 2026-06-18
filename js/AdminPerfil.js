@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3. Cargar datos del usuario en la interfaz
-    const nombreElement = document.querySelector('.info-details-box p:nth-child(1) strong');
-    const correoElement = document.querySelector('.info-details-box p:nth-child(2) strong');
+    const nombreElement = document.getElementById('displayNombre');
+    const correoElement = document.getElementById('displayCorreo');
     const rolElement = document.querySelector('.admin-user-info h2');
 
     if (nombreElement) {
