@@ -68,13 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTurno.value = usuario.turno || '8:00 - 16:00';
     }
 
-    // 4. Cargar calificación promedio del técnico
-    async function cargarCalificacionPromedio() {
+    // 4. Cargar estadísticas del técnico (tickets resueltos y calificación promedio)
+    async function cargarEstadisticasTecnico() {
         try {
-            const response = await fetch(`https://gesotec.onrender.com/api/metricas/tecnico/${usuario.id}/calificacion`);
+            const response = await fetch(`https://gesotec.onrender.com/api/metricas/tecnico/${usuario.id}/estadisticas`);
             const data = await response.json();
 
             if (response.ok) {
+                // Cargar tickets resueltos
+                const displayTicketsResueltos = document.getElementById('displayTicketsResueltos');
+                if (displayTicketsResueltos) {
+                    displayTicketsResueltos.textContent = data.tickets_resueltos;
+                }
+
+                // Cargar calificación promedio
                 const displayCalificacion = document.getElementById('displayCalificacion');
                 if (displayCalificacion) {
                     if (data.calificacion_promedio) {
@@ -85,11 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } catch (error) {
-            console.error('Error al cargar calificación promedio:', error);
+            console.error('Error al cargar estadísticas del técnico:', error);
         }
     }
 
-    cargarCalificacionPromedio();
+    cargarEstadisticasTecnico();
 
     // 5. Modal de edición
     const modal = document.getElementById('editModal');

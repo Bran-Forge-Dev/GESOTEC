@@ -36,6 +36,54 @@ router.get('/tecnico/:tecnico_id/calificacion', async (req, res) => {
     }
 });
 
+// Obtener estadísticas de un técnico (tickets resueltos y calificación promedio)
+router.get('/tecnico/:tecnico_id/estadisticas', async (req, res) => {
+    try {
+        const { tecnico_id } = req.params;
+
+        // Obtener tickets resueltos/cerrados del técnico
+        const { data: ticketsResueltos, error: resueltosError } = await supabase
+            .from('tickets')
+            .select('id')
+            .eq('tecnico_id', tecnico_id)
+            .in('estado', ['Resuelto', 'Cerrado']);
+
+        if (resueltosError) {
+            console.error('Error al obtener tickets resueltos:', resueltosError);
+            return res.status(500).json({ error: 'Error al obtener tickets resueltos' });
+        }
+
+        // Obtener calificaciones del técnico
+        const { data: ticketsConCalificacion, error: calificacionError } = await supabase
+            .from('tickets')
+            .select('calificacion')
+            .eq('tecnico_id', tecnico_id)
+            .not('calificacion', 'is', null);
+
+        if (calificacionError) {
+            console.error('Error al obtener calificaciones:', calificacionError);
+            return res.status(500).json({ error: 'Error al obtener calificaciones' });
+        }
+
+        // Calcular calificación promedio
+        let calificacionPromedio = null;
+        if (ticketsConCalificacion.length > 0) {
+            const totalCalificaciones = ticketsConCalificacion.reduce((sum, t) => sum + t.calificacion, 0);
+            calificacionPromedio = Math.round((totalCalificaciones / ticketsConCalificacion.length) * 10) / 10;
+        }
+
+        res.json({
+            tickets_resueltos: ticketsResueltos.length,
+            calificacion_promedio: calificacionPromedio,
+            total_calificaciones: ticketsConCalificacion.length
+        });
+
+    } catch (error) {
+        console.error('Error al obtener estadísticas del técnico:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 // Helper para calcular rango de fechas
 function getFechaRango(rango) {
     const ahora = new Date();
