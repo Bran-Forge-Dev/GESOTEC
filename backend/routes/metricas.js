@@ -2,6 +2,40 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 
+// Obtener calificación promedio de un técnico
+router.get('/tecnico/:tecnico_id/calificacion', async (req, res) => {
+    try {
+        const { tecnico_id } = req.params;
+
+        const { data: tickets, error } = await supabase
+            .from('tickets')
+            .select('calificacion')
+            .eq('tecnico_id', tecnico_id)
+            .not('calificacion', 'is', null);
+
+        if (error) {
+            console.error('Error al obtener calificaciones:', error);
+            return res.status(500).json({ error: 'Error al obtener calificaciones' });
+        }
+
+        if (tickets.length === 0) {
+            return res.json({ calificacion_promedio: null, total_calificaciones: 0 });
+        }
+
+        const totalCalificaciones = tickets.reduce((sum, t) => sum + t.calificacion, 0);
+        const calificacionPromedio = totalCalificaciones / tickets.length;
+
+        res.json({
+            calificacion_promedio: Math.round(calificacionPromedio * 10) / 10, // Redondear a 1 decimal
+            total_calificaciones: tickets.length
+        });
+
+    } catch (error) {
+        console.error('Error al obtener calificación promedio:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 // Helper para calcular rango de fechas
 function getFechaRango(rango) {
     const ahora = new Date();

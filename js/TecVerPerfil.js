@@ -68,7 +68,30 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTurno.value = usuario.turno || '8:00 - 16:00';
     }
 
-    // 4. Modal de edición
+    // 4. Cargar calificación promedio del técnico
+    async function cargarCalificacionPromedio() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/metricas/tecnico/${usuario.id}/calificacion`);
+            const data = await response.json();
+
+            if (response.ok) {
+                const displayCalificacion = document.getElementById('displayCalificacion');
+                if (displayCalificacion) {
+                    if (data.calificacion_promedio) {
+                        displayCalificacion.textContent = `${data.calificacion_promedio}/5`;
+                    } else {
+                        displayCalificacion.textContent = 'Sin calificaciones';
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar calificación promedio:', error);
+        }
+    }
+
+    cargarCalificacionPromedio();
+
+    // 5. Modal de edición
     const modal = document.getElementById('editModal');
     const openBtn = document.getElementById('openEditModal');
     const closeBtn = document.getElementById('closeModal');
