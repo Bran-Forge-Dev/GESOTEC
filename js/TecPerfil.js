@@ -114,12 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 12. Toggle del dropdown del menú de usuario
     if (userAvatarBtn && userDropdown) {
+        console.log('Elementos encontrados:', { userAvatarBtn, userDropdown });
         userAvatarBtn.addEventListener('click', (e) => {
+            console.log('Clic en userAvatarBtn');
             e.stopPropagation();
             userDropdown.classList.toggle('show');
             userAvatarBtn.classList.toggle('active');
             notificationsDropdown.classList.remove('show');
+            console.log('Clases después del clic:', {
+                dropdownShow: userDropdown.classList.contains('show'),
+                avatarActive: userAvatarBtn.classList.contains('active')
+            });
         });
+    } else {
+        console.error('No se encontraron elementos:', { userAvatarBtn, userDropdown });
     }
 
     // 13. Toggle del dropdown de notificaciones al hacer clic en el badge
