@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayTelefono = document.getElementById('displayTelefono');
     const displayIdEmpleado = document.getElementById('displayIdEmpleado');
     const displayFechaIngreso = document.getElementById('displayFechaIngreso');
+    const displayIdEmpleadoSkills = document.getElementById('displayIdEmpleadoSkills');
     const inputNombre = document.getElementById('inputNombre');
     const inputTelefono = document.getElementById('inputTelefono');
     const inputTurno = document.getElementById('inputTurno');
@@ -54,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (displayFechaIngreso) {
         const fecha = usuario.fecha_ingreso ? new Date(usuario.fecha_ingreso).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }) : 'No especificada';
         displayFechaIngreso.textContent = fecha;
+    }
+
+    if (displayIdEmpleadoSkills) {
+        displayIdEmpleadoSkills.textContent = usuario.id_empleado || 'No asignado';
     }
 
     if (inputNombre) {
