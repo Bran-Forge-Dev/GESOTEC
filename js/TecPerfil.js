@@ -118,12 +118,23 @@ document.addEventListener('DOMContentLoaded', () => {
         userAvatarBtn.addEventListener('click', (e) => {
             console.log('Clic en userAvatarBtn');
             e.stopPropagation();
-            userDropdown.classList.toggle('show');
-            userAvatarBtn.classList.toggle('active');
+            
+            // Forzar agregar/remover clases en lugar de toggle
+            if (userDropdown.classList.contains('show')) {
+                userDropdown.classList.remove('show');
+                userAvatarBtn.classList.remove('active');
+            } else {
+                userDropdown.classList.add('show');
+                userAvatarBtn.classList.add('active');
+            }
+            
             notificationsDropdown.classList.remove('show');
+            
             console.log('Clases después del clic:', {
                 dropdownShow: userDropdown.classList.contains('show'),
-                avatarActive: userAvatarBtn.classList.contains('active')
+                avatarActive: userAvatarBtn.classList.contains('active'),
+                dropdownClasses: userDropdown.className,
+                avatarClasses: userAvatarBtn.className
             });
         });
     } else {
