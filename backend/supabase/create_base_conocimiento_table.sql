@@ -1,5 +1,8 @@
+-- Eliminar tabla si existe para asegurar estructura correcta
+DROP TABLE IF EXISTS base_conocimiento CASCADE;
+
 -- Crear tabla para la Base de Conocimiento
-CREATE TABLE IF NOT EXISTS base_conocimiento (
+CREATE TABLE base_conocimiento (
     id BIGSERIAL PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
@@ -13,13 +16,13 @@ CREATE TABLE IF NOT EXISTS base_conocimiento (
 );
 
 -- Crear índice para búsquedas por palabras clave
-CREATE INDEX IF NOT EXISTS idx_base_conocimiento_palabras_clave ON base_conocimiento USING GIN(palabras_clave);
+CREATE INDEX idx_base_conocimiento_palabras_clave ON base_conocimiento USING GIN(palabras_clave);
 
 -- Crear índice para búsquedas por categoría
-CREATE INDEX IF NOT EXISTS idx_base_conocimiento_categoria ON base_conocimiento(categoria);
+CREATE INDEX idx_base_conocimiento_categoria ON base_conocimiento(categoria);
 
 -- Crear índice para búsquedas por título
-CREATE INDEX IF NOT EXISTS idx_base_conocimiento_titulo ON base_conocimiento(titulo);
+CREATE INDEX idx_base_conocimiento_titulo ON base_conocimiento(titulo);
 
 -- Insertar problemas frecuentes iniciales
 INSERT INTO base_conocimiento (titulo, descripcion, categoria, icono, palabras_clave, solucion, creado_por) VALUES
