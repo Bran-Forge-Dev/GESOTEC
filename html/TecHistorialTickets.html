@@ -6,6 +6,8 @@
     <title>GESOTEC - Historial de Tickets</title>
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/TecHistorialTickets.css">
+    <link rel="stylesheet" href="../css/user-menu.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
     <div class="app-container">
@@ -15,6 +17,45 @@
             </div>
             <div class="header-title-block">
                 <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+            <div class="header-user-menu">
+                <div class="user-menu-container" id="userMenu">
+                    <div class="user-avatar-button" id="userAvatarBtn">
+                        <div class="user-avatar-circle" id="userInitials">T">
+                            <span class="notification-badge hidden" id="notificationBadge">0</span>
+                        </div>
+                        <div class="user-info-display">
+                            <span class="user-name-display" id="userName">Técnico</span>
+                            <span class="user-role-display">Técnico</span>
+                        </div>
+                        <svg class="dropdown-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 8L10 13L15 8" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="user-menu-dropdown" id="userDropdown">
+                        <a href="TecVerPerfil.html" class="user-menu-item">
+                            <svg class="user-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#666"/>
+                            </svg>
+                            <span class="user-menu-text">Perfil</span>
+                        </a>
+                        <a href="#" class="user-menu-item danger" id="logoutBtn">
+                            <svg class="user-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 7L15.59 8.41L18.17 11H9V13H18.17L15.59 15.58L17 17L22 12L17 7ZM4 5H12V3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H12V19H4V5Z" fill="#d32f2f"/>
+                            </svg>
+                            <span class="user-menu-text">Cerrar Sesión</span>
+                        </a>
+                    </div>
+                    <div class="notifications-dropdown" id="notificationsDropdown">
+                        <div class="notifications-header">
+                            <h3>Notificaciones</h3>
+                            <button class="mark-all-read-btn" id="markAllReadBtn">Marcar todas como leídas</button>
+                        </div>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- Las notificaciones se cargarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
