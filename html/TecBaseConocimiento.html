@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESOTEC - Base de Conocimiento</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/TecBaseConocimiento.css">
+    <link rel="stylesheet" href="../css/user-menu.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="main-header">
+            <div class="header-logo-block">
+                <img src="../images/icon_gesotec.png" alt="Logo">
+            </div>
+            <div class="header-title-block">
+                <h1>Gestión de Soporte Tecnológico</h1>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="TecPerfil.html" class="nav-item">
+                        <span class="nav-icon">🏠</span> Panel de Control
+                    </a>
+                    <a href="#" class="nav-item active">
+                        <span class="nav-icon">📚</span> Base de Conocimiento
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-pill">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-meta">
+                            <p class="role-label">Técnico</p>
+                            <a href="TecVerPerfil.html" class="profile-link">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <section class="knowledge-header">
+                    <h2>Base de Conocimiento</h2>
+                    <p>Busca soluciones a problemas frecuentes para ayudar a los usuarios</p>
+                    
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Buscar por palabras clave (ej: wifi, impresora, contraseña...)" class="search-input">
+                        <button id="searchBtn" class="search-btn">🔍 Buscar</button>
+                    </div>
+                </section>
+
+                <section class="frequent-issues">
+                    <h3>Problemas Frecuentes</h3>
+                    <div class="issues-grid" id="issuesGrid">
+                        <!-- Los problemas se cargarán dinámicamente -->
+                    </div>
+                </section>
+
+                <section class="search-results" id="searchResultsSection" style="display: none;">
+                    <h3>Resultados de Búsqueda</h3>
+                    <div class="results-list" id="resultsList">
+                        <!-- Los resultados se cargarán dinámicamente -->
+                    </div>
+                </section>
+
+                <section class="need-help">
+                    <h3>¿No encontraste la solución?</h3>
+                    <p>Si el problema no está en la base de conocimiento, coordina con el equipo de soporte para agregarlo.</p>
+                    <a href="TecPerfil.html" class="btn-action btn-blue">Volver al Panel de Control</a>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+    <script src="../js/TecBaseConocimiento.js"></script>
+</html>
