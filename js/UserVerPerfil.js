@@ -109,6 +109,83 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar estadísticas al iniciar
     cargarEstadisticasTickets();
 
+    // 4.5. Cargar solicitudes recientes del usuario
+    async function cargarSolicitudesRecientes() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/usuario/${usuario.id}`);
+            const tickets = await response.json();
+
+            if (response.ok) {
+                const solicitudesRecientes = document.getElementById('solicitudesRecientes');
+                
+                if (solicitudesRecientes) {
+                    // Obtener los 3 tickets más recientes
+                    const ticketsRecientes = tickets.slice(0, 3);
+                    
+                    if (ticketsRecientes.length === 0) {
+                        solicitudesRecientes.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">No tienes tickets recientes</p>';
+                        return;
+                    }
+
+                    solicitudesRecientes.innerHTML = ticketsRecientes.map(ticket => {
+                        // Determinar el icono según el estado
+                        let icono = '📋';
+                        let colorClase = 'red';
+                        
+                        if (ticket.estado === 'Resuelto' || ticket.estado === 'Cerrado') {
+                            icono = '✅';
+                            colorClase = 'green';
+                        } else if (ticket.estado === 'En Proceso') {
+                            icono = '🔄';
+                            colorClase = 'yellow';
+                        }
+
+                        // Determinar el badge según el estado
+                        let badgeClase = 'badge-yellow';
+                        if (ticket.estado === 'Resuelto' || ticket.estado === 'Cerrado') {
+                            badgeClase = 'badge-green';
+                        } else if (ticket.estado === 'Abierto') {
+                            badgeClase = 'badge-yellow';
+                        }
+
+                        // Calcular tiempo relativo
+                        const fechaCreacion = new Date(ticket.fecha_creacion);
+                        const ahora = new Date();
+                        const diffHoras = Math.floor((ahora - fechaCreacion) / (1000 * 60 * 60));
+                        const diffDias = Math.floor(diffHoras / 24);
+                        
+                        let tiempoTexto = 'Hace un momento';
+                        if (diffHoras < 1) {
+                            tiempoTexto = 'Hace un momento';
+                        } else if (diffHoras < 24) {
+                            tiempoTexto = `Hace ${diffHoras} hora${diffHoras > 1 ? 's' : ''}`;
+                        } else {
+                            tiempoTexto = `Hace ${diffDias} día${diffDias > 1 ? 's' : ''}`;
+                        }
+
+                        return `
+                            <div class="request-item">
+                                <div class="req-left">
+                                    <span class="req-ico ${colorClase}">${icono}</span>
+                                    <div class="req-texts">
+                                        <p class="req-name">${ticket.asunto}</p>
+                                        <p class="req-id">#TK-${ticket.id} <span class="badge ${badgeClase}">${ticket.estado}</span></p>
+                                    </div>
+                                </div>
+                                <div class="req-time">${tiempoTexto}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar solicitudes recientes:', error);
+        }
+    }
+
+    // Cargar solicitudes recientes al iniciar
+    cargarSolicitudesRecientes();
+
     // 5. Modal de edición
     const modal = document.getElementById('editModal');
     const openBtn = document.getElementById('openEditModal');
