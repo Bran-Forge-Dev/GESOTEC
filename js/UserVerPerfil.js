@@ -78,7 +78,38 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTurno.value = usuario.turno || '8:00 - 16:00';
     }
 
-    // 4. Modal de edición
+    // 4. Cargar estadísticas de tickets del usuario
+    async function cargarEstadisticasTickets() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/usuario/${usuario.id}/estadisticas`);
+            const data = await response.json();
+
+            if (response.ok) {
+                const displayTicketsTotales = document.getElementById('displayTicketsTotales');
+                const displayTicketsEnProceso = document.getElementById('displayTicketsEnProceso');
+                const displayTicketsCompletados = document.getElementById('displayTicketsCompletados');
+
+                if (displayTicketsTotales) {
+                    displayTicketsTotales.textContent = data.tickets_totales || 0;
+                }
+
+                if (displayTicketsEnProceso) {
+                    displayTicketsEnProceso.textContent = data.tickets_en_proceso || 0;
+                }
+
+                if (displayTicketsCompletados) {
+                    displayTicketsCompletados.textContent = data.tickets_completados || 0;
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar estadísticas de tickets:', error);
+        }
+    }
+
+    // Cargar estadísticas al iniciar
+    cargarEstadisticasTickets();
+
+    // 5. Modal de edición
     const modal = document.getElementById('editModal');
     const openBtn = document.getElementById('openEditModal');
     const closeBtn = document.getElementById('closeModal');

@@ -338,4 +338,37 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Obtener estadísticas de tickets de un usuario
+router.get('/usuario/:usuario_id/estadisticas', async (req, res) => {
+    try {
+        const { usuario_id } = req.params;
+
+        // Obtener todos los tickets del usuario
+        const { data: tickets, error } = await supabase
+            .from('tickets')
+            .select('*')
+            .eq('usuario_id', usuario_id);
+
+        if (error) {
+            console.error('Error al obtener tickets:', error);
+            return res.status(500).json({ error: 'Error al obtener tickets' });
+        }
+
+        // Calcular estadísticas
+        const ticketsTotales = tickets.length;
+        const ticketsEnProceso = tickets.filter(t => t.estado === 'En Proceso').length;
+        const ticketsCompletados = tickets.filter(t => t.estado === 'Cerrado' || t.estado === 'Resuelto').length;
+
+        res.json({
+            tickets_totales: ticketsTotales,
+            tickets_en_proceso: ticketsEnProceso,
+            tickets_completados: ticketsCompletados
+        });
+
+    } catch (error) {
+        console.error('Error al obtener estadísticas:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 module.exports = router;
