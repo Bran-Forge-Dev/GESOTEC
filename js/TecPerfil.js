@@ -112,26 +112,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // 11. Cargar notificaciones al iniciar
     cargarContadorNotificaciones();
 
-    // 12. Toggle del dropdown de notificaciones al hacer clic en el badge o avatar
-    if (userAvatarBtn && notificationsDropdown) {
+    // 12. Toggle del dropdown del menú de usuario
+    if (userAvatarBtn && userDropdown) {
         userAvatarBtn.addEventListener('click', (e) => {
-            // Si el clic fue en el badge, abrir notificaciones
-            if (e.target === notificationBadge || notificationBadge.contains(e.target)) {
-                e.stopPropagation();
-                notificationsDropdown.classList.toggle('show');
-                userDropdown.classList.remove('show');
-                userAvatarBtn.classList.remove('active');
-                
-                // Cargar notificaciones cuando se abre el dropdown
-                if (notificationsDropdown.classList.contains('show')) {
-                    cargarNotificaciones();
-                }
-            } else {
-                // Si el clic fue en el avatar pero no en el badge, abrir menú de usuario
-                e.stopPropagation();
-                userDropdown.classList.toggle('show');
-                userAvatarBtn.classList.toggle('active');
-                notificationsDropdown.classList.remove('show');
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+            userAvatarBtn.classList.toggle('active');
+            notificationsDropdown.classList.remove('show');
+        });
+    }
+
+    // 13. Toggle del dropdown de notificaciones al hacer clic en el badge
+    if (notificationBadge && notificationsDropdown) {
+        notificationBadge.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            notificationsDropdown.classList.toggle('show');
+            userDropdown.classList.remove('show');
+            userAvatarBtn.classList.remove('active');
+            
+            // Cargar notificaciones cuando se abre el dropdown
+            if (notificationsDropdown.classList.contains('show')) {
+                cargarNotificaciones();
             }
         });
     }
