@@ -371,4 +371,31 @@ router.get('/usuario/:usuario_id/estadisticas', async (req, res) => {
     }
 });
 
+// Obtener actividades recientes de un técnico (tickets resueltos)
+router.get('/tecnico/:tecnico_id/actividades-recientes', async (req, res) => {
+    try {
+        const { tecnico_id } = req.params;
+
+        // Obtener tickets resueltos por el técnico
+        const { data: tickets, error } = await supabase
+            .from('tickets')
+            .select('*')
+            .eq('tecnico_id', tecnico_id)
+            .in('estado', ['Cerrado', 'Resuelto'])
+            .order('fecha_actualizacion', { ascending: false })
+            .limit(5);
+
+        if (error) {
+            console.error('Error al obtener actividades recientes:', error);
+            return res.status(500).json({ error: 'Error al obtener actividades recientes' });
+        }
+
+        res.json(tickets);
+
+    } catch (error) {
+        console.error('Error al obtener actividades recientes:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 module.exports = router;

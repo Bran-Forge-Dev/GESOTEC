@@ -98,6 +98,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarEstadisticasTecnico();
 
+    // 4.5. Cargar actividades recientes del técnico
+    async function cargarActividadesRecientes() {
+        try {
+            const response = await fetch(`https://gesotec.onrender.com/api/tickets/tecnico/${usuario.id}/actividades-recientes`);
+            const tickets = await response.json();
+
+            if (response.ok) {
+                const actividadesRecientes = document.getElementById('actividadesRecientes');
+                
+                if (actividadesRecientes) {
+                    if (tickets.length === 0) {
+                        actividadesRecientes.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">No tienes actividades recientes</p>';
+                        return;
+                    }
+
+                    actividadesRecientes.innerHTML = tickets.map(ticket => {
+                        // Calcular tiempo relativo
+                        const fechaActualizacion = new Date(ticket.fecha_actualizacion);
+                        const ahora = new Date();
+                        const diffMinutos = Math.floor((ahora - fechaActualizacion) / 60000);
+                        
+                        let tiempoTexto = 'Hace un momento';
+                        if (diffMinutos < 1) {
+                            tiempoTexto = 'Hace un momento';
+                        } else if (diffMinutos < 60) {
+                            tiempoTexto = `Hace ${diffMinutos} minuto${diffMinutos > 1 ? 's' : ''}`;
+                        } else {
+                            const diffHoras = Math.floor(diffMinutos / 60);
+                            if (diffHoras < 24) {
+                                tiempoTexto = `Hace ${diffHoras} hora${diffHoras > 1 ? 's' : ''}`;
+                            } else {
+                                const diffDias = Math.floor(diffHoras / 24);
+                                tiempoTexto = `Hace ${diffDias} día${diffDias > 1 ? 's' : ''}`;
+                            }
+                        }
+
+                        return `
+                            <div class="activity-item">
+                                <span class="check-icon">✔️</span>
+                                <p>Resolvió exitosamente <strong>#TK-${ticket.id}: ${ticket.asunto}</strong> <br> <small>${tiempoTexto}</small></p>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar actividades recientes:', error);
+        }
+    }
+
+    // Cargar actividades recientes al iniciar
+    cargarActividadesRecientes();
+
     // 5. Sistema de notificaciones
     const userAvatarBtn = document.getElementById('userAvatarBtn');
     const userDropdown = document.getElementById('userDropdown');

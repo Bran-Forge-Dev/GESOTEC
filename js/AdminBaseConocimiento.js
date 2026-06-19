@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <option value="🔒">🔒 VPN</option>
                                     <option value="⌨️">⌨️ Periféricos</option>
                                     <option value="🚫">🚫 Acceso</option>
+                                    <option value="📂">📂 Archivos</option>
                                 </select>
                             </div>
                             <div class="form-group">
