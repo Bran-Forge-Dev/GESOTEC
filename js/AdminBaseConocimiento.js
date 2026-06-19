@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5.5. Event listener para botón agregar problema
     const agregarProblemaBtn = document.getElementById('agregarProblemaBtn');
     if (agregarProblemaBtn) {
-        agregarProblemaBtn.addEventListener('click', mostrarModalAgregarProblema);
+        agregarProblemaBtn.addEventListener('click', () => mostrarModalAgregarProblema());
     }
 
     // 6. Event listener para búsqueda
