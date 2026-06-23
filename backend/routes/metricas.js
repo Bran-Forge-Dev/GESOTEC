@@ -8,7 +8,7 @@ router.get('/tecnico/:tecnico_id/calificacion', async (req, res) => {
         const { tecnico_id } = req.params;
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('calificacion')
             .eq('tecnico_id', tecnico_id)
             .not('calificacion', 'is', null);
@@ -36,14 +36,14 @@ router.get('/tecnico/:tecnico_id/calificacion', async (req, res) => {
     }
 });
 
-// Obtener estadísticas de un técnico (tickets resueltos y calificación promedio)
+// Obtener estadísticas de un técnico (ge_tickets resueltos y calificación promedio)
 router.get('/tecnico/:tecnico_id/estadisticas', async (req, res) => {
     try {
         const { tecnico_id } = req.params;
 
         // Obtener tickets resueltos/cerrados del técnico
         const { data: ticketsResueltos, error: resueltosError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .eq('tecnico_id', tecnico_id)
             .in('estado', ['Resuelto', 'Cerrado']);
@@ -55,7 +55,7 @@ router.get('/tecnico/:tecnico_id/estadisticas', async (req, res) => {
 
         // Obtener calificaciones del técnico
         const { data: ticketsConCalificacion, error: calificacionError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('calificacion')
             .eq('tecnico_id', tecnico_id)
             .not('calificacion', 'is', null);
@@ -122,14 +122,14 @@ router.get('/kpis', async (req, res) => {
 
         // Obtener total de tickets en el rango
         const { data: totalTickets, error: totalError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
 
         // Obtener tickets resueltos
         const { data: resueltos, error: resueltosError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString())
@@ -137,7 +137,7 @@ router.get('/kpis', async (req, res) => {
 
         // Obtener tickets en proceso
         const { data: enProceso, error: enProcesoError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString())
@@ -145,14 +145,14 @@ router.get('/kpis', async (req, res) => {
 
         // Obtener backlog (tickets abiertos)
         const { data: backlog, error: backlogError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .in('estado', ['Abierto', 'En Progreso']);
 
         // Calcular tendencias (comparar con período anterior)
         const { inicio: inicioAnterior, fin: finAnterior } = getFechaRango(rango);
         const { data: totalAnterior } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('id')
             .gte('fecha_creacion', inicioAnterior.toISOString())
             .lte('fecha_creacion', finAnterior.toISOString());
@@ -176,7 +176,7 @@ router.get('/kpis', async (req, res) => {
     }
 });
 
-// Obtener volumen de tickets por período
+// Obtener volumen de ge_tickets por período
 router.get('/volumen', async (req, res) => {
     try {
         const { rango = 'month' } = req.query;
@@ -184,7 +184,7 @@ router.get('/volumen', async (req, res) => {
 
         // Obtener tickets agrupados por día/semana
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('fecha_creacion')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString())
@@ -213,7 +213,7 @@ router.get('/clasificacion', async (req, res) => {
         const { inicio, fin } = getFechaRango(rango);
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('categoria')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
@@ -251,7 +251,7 @@ router.get('/tecnicos', async (req, res) => {
 
         // Obtener técnicos
         const { data: tecnicos, error: tecnicosError } = await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .select('id, nombre, apellido')
             .eq('rol', 'tecnico');
 
@@ -266,7 +266,7 @@ router.get('/tecnicos', async (req, res) => {
             
             // Tickets asignados (sin filtro de fecha para contar todos)
             const { data: allTickets, error: ticketsError } = await supabase
-                .from('tickets')
+                .from('ge_tickets')
                 .select('id, estado, fecha_creacion, tecnico_id, calificacion')
                 .eq('tecnico_id', tecnico.id);
 
@@ -285,7 +285,7 @@ router.get('/tecnicos', async (req, res) => {
             
             // Tickets en el rango de fechas para métricas de tiempo
             const { data: tickets } = await supabase
-                .from('tickets')
+                .from('ge_tickets')
                 .select('id, estado, fecha_creacion')
                 .eq('tecnico_id', tecnico.id)
                 .gte('fecha_creacion', inicio.toISOString())
@@ -325,14 +325,14 @@ router.get('/tecnicos', async (req, res) => {
     }
 });
 
-// Obtener estado de tickets
+// Obtener estado de ge_tickets
 router.get('/estado', async (req, res) => {
     try {
         const { rango = 'month' } = req.query;
         const { inicio, fin } = getFechaRango(rango);
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('estado')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
@@ -369,7 +369,7 @@ router.get('/departamento', async (req, res) => {
         const { inicio, fin } = getFechaRango(rango);
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('usuario_id')
             .gte('fecha_creacion', inicio.toISOString())
             .lte('fecha_creacion', fin.toISOString());
@@ -382,7 +382,7 @@ router.get('/departamento', async (req, res) => {
         // Obtener usuarios para obtener sus departamentos
         const userIds = [...new Set(tickets.map(t => t.usuario_id))];
         const { data: usuarios, error: usuariosError } = await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .select('id, departamento')
             .in('id', userIds);
 

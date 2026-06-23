@@ -6,7 +6,7 @@ const supabase = require('../config/supabase');
 router.get('/', async (req, res) => {
     try {
         const { data: tareas, error } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .select('*')
             .order('fecha_creacion', { ascending: false });
 
@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
         const { id } = req.params;
 
         const { data: tarea, error } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .select('*')
             .eq('id', id)
             .single();
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 
         // Insertar tarea
         const { data: newTarea, error } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .insert({
                 titulo,
                 descripcion: descripcion || null,
@@ -98,7 +98,7 @@ router.put('/:id', async (req, res) => {
 
         // Verificar que la tarea existe
         const { data: existingTarea, error: checkError } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .select('id')
             .eq('id', id)
             .single();
@@ -127,7 +127,7 @@ router.put('/:id', async (req, res) => {
         console.log('Datos a actualizar:', updateData);
 
         const { data: updatedTarea, error } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .update(updateData)
             .eq('id', id)
             .select()
@@ -157,7 +157,7 @@ router.delete('/:id', async (req, res) => {
         const { id } = req.params;
 
         const { error } = await supabase
-            .from('tareas')
+            .from('ge_tareas')
             .delete()
             .eq('id', id);
 

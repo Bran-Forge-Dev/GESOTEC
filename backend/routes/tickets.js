@@ -7,11 +7,11 @@ const { enviarEmailTicketAsignado, enviarEmailTicketActualizado } = require('../
 router.get('/', async (req, res) => {
     try {
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select(`
                 *,
-                usuarios!tickets_usuario_id_fkey (nombre, apellido),
-                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+                ge_usuarios!ge_tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:ge_usuarios!ge_tickets_tecnico_id_fkey (nombre, apellido)
             `)
             .order('fecha_creacion', { ascending: false });
 
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         // Formatear los tickets para incluir nombres
         const formattedTickets = tickets.map(ticket => ({
             ...ticket,
-            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            usuario_nombre: ticket.ge_usuarios ? `${ticket.ge_usuarios.nombre} ${ticket.ge_usuarios.apellido || ''}` : 'Usuario',
             tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
         }));
 
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 
         // Insertar ticket
         const { data: newTicket, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .insert({
                 asunto,
                 descripcion,
@@ -80,11 +80,11 @@ router.get('/usuario/:usuario_id', async (req, res) => {
         const { usuario_id } = req.params;
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select(`
                 *,
-                usuarios!tickets_usuario_id_fkey (nombre, apellido),
-                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+                ge_usuarios!ge_tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:ge_usuarios!ge_tickets_tecnico_id_fkey (nombre, apellido)
             `)
             .eq('usuario_id', usuario_id)
             .order('fecha_creacion', { ascending: false });
@@ -97,7 +97,7 @@ router.get('/usuario/:usuario_id', async (req, res) => {
         // Formatear los tickets para incluir nombres
         const formattedTickets = tickets.map(ticket => ({
             ...ticket,
-            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            usuario_nombre: ticket.ge_usuarios ? `${ticket.ge_usuarios.nombre} ${ticket.ge_usuarios.apellido || ''}` : 'Usuario',
             tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
         }));
 
@@ -115,11 +115,11 @@ router.get('/tecnico/:tecnico_id', async (req, res) => {
         const { tecnico_id } = req.params;
 
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select(`
                 *,
-                usuarios!tickets_usuario_id_fkey (nombre, apellido),
-                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+                ge_usuarios!ge_tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:ge_usuarios!ge_tickets_tecnico_id_fkey (nombre, apellido)
             `)
             .eq('tecnico_id', tecnico_id)
             .order('fecha_creacion', { ascending: false });
@@ -132,7 +132,7 @@ router.get('/tecnico/:tecnico_id', async (req, res) => {
         // Formatear los tickets para incluir nombres
         const formattedTickets = tickets.map(ticket => ({
             ...ticket,
-            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            usuario_nombre: ticket.ge_usuarios ? `${ticket.ge_usuarios.nombre} ${ticket.ge_usuarios.apellido || ''}` : 'Usuario',
             tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
         }));
 
@@ -150,11 +150,11 @@ router.get('/:id', async (req, res) => {
         const { id } = req.params;
 
         const { data: ticket, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select(`
                 *,
-                usuarios!tickets_usuario_id_fkey (nombre, apellido),
-                tecnico:usuarios!tickets_tecnico_id_fkey (nombre, apellido)
+                ge_usuarios!ge_tickets_usuario_id_fkey (nombre, apellido),
+                tecnico:ge_usuarios!ge_tickets_tecnico_id_fkey (nombre, apellido)
             `)
             .eq('id', id)
             .single();
@@ -166,7 +166,7 @@ router.get('/:id', async (req, res) => {
         // Formatear el ticket para incluir nombres
         const formattedTicket = {
             ...ticket,
-            usuario_nombre: ticket.usuarios ? `${ticket.usuarios.nombre} ${ticket.usuarios.apellido || ''}` : 'Usuario',
+            usuario_nombre: ticket.ge_usuarios ? `${ticket.ge_usuarios.nombre} ${ticket.ge_usuarios.apellido || ''}` : 'Usuario',
             tecnico_nombre: ticket.tecnico ? `${ticket.tecnico.nombre} ${ticket.tecnico.apellido || ''}` : null
         };
 
@@ -189,7 +189,7 @@ router.put('/:id', async (req, res) => {
 
         // Verificar que el ticket existe y obtener datos actuales
         const { data: existingTicket, error: checkError } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('*')
             .eq('id', id)
             .single();
@@ -212,7 +212,7 @@ router.put('/:id', async (req, res) => {
         console.log('Datos a actualizar:', updateData);
 
         const { data: updatedTicket, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .update(updateData)
             .eq('id', id)
             .select()
@@ -231,7 +231,7 @@ router.put('/:id', async (req, res) => {
             try {
                 // Obtener datos del técnico
                 const { data: tecnico, error: tecnicoError } = await supabase
-                    .from('usuarios')
+                    .from('ge_usuarios')
                     .select('nombre, apellido, email')
                     .eq('id', tecnico_id)
                     .single();
@@ -250,7 +250,7 @@ router.put('/:id', async (req, res) => {
 
                     // Crear notificación en la base de datos
                     const { error: notifError } = await supabase
-                        .from('notificaciones')
+                        .from('ge_notificaciones')
                         .insert({
                             usuario_id: tecnico_id,
                             tipo: 'ticket_asignado',
@@ -282,7 +282,7 @@ router.put('/:id', async (req, res) => {
             try {
                 // Obtener datos del usuario
                 const { data: usuario, error: usuarioError } = await supabase
-                    .from('usuarios')
+                    .from('ge_usuarios')
                     .select('nombre, apellido, email')
                     .eq('id', existingTicket.usuario_id)
                     .single();
@@ -301,7 +301,7 @@ router.put('/:id', async (req, res) => {
 
                     // Crear notificación en la base de datos
                     const { error: notifError } = await supabase
-                        .from('notificaciones')
+                        .from('ge_notificaciones')
                         .insert({
                             usuario_id: existingTicket.usuario_id,
                             tipo: 'ticket_actualizado',
@@ -345,7 +345,7 @@ router.get('/usuario/:usuario_id/estadisticas', async (req, res) => {
 
         // Obtener todos los tickets del usuario
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('*')
             .eq('usuario_id', usuario_id);
 
@@ -378,7 +378,7 @@ router.get('/tecnico/:tecnico_id/actividades-recientes', async (req, res) => {
 
         // Obtener tickets resueltos por el técnico
         const { data: tickets, error } = await supabase
-            .from('tickets')
+            .from('ge_tickets')
             .select('*')
             .eq('tecnico_id', tecnico_id)
             .in('estado', ['Cerrado', 'Resuelto'])

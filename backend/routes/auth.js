@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
 
         // Verificar si el email ya existe
         const { data: existingUser } = await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .select('email')
             .eq('email', email)
             .single();
@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
 
         // Insertar usuario
         const { data: newUser, error } = await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .insert({
                 email,
                 password_hash,
@@ -78,7 +78,7 @@ router.post('/login', async (req, res) => {
 
         // Buscar usuario por email (incluyendo nuevos campos)
         const { data: user, error } = await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .select('id, email, nombre, apellido, rol, telefono, departamento, id_empleado, fecha_ingreso, turno, activo, fecha_creacion, ultima_sesion, password_hash')
             .eq('email', email)
             .single();
@@ -100,7 +100,7 @@ router.post('/login', async (req, res) => {
 
         // Actualizar última sesión
         await supabase
-            .from('usuarios')
+            .from('ge_usuarios')
             .update({ ultima_sesion: new Date().toISOString() })
             .eq('id', user.id);
 
