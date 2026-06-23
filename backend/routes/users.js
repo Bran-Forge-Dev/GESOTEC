@@ -7,7 +7,7 @@ const supabase = require('../config/supabase');
 router.get('/', async (req, res) => {
     try {
         const { data: users, error } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .select('id, email, nombre, apellido, rol, telefono, departamento, activo, fecha_creacion, ultima_sesion')
             .order('fecha_creacion', { ascending: false });
 
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 router.get('/tecnicos', async (req, res) => {
     try {
         const { data: tecnicos, error } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .select('id, nombre, apellido, email')
             .eq('rol', 'tecnico')
             .eq('activo', true)
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
 
         // Verificar si el email ya existe
         const { data: existingUser } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .select('email')
             .eq('email', email)
             .single();
@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
 
         // Insertar usuario
         const { data: newUser, error } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .insert({
                 email,
                 password_hash,
@@ -113,7 +113,7 @@ router.put('/:id', async (req, res) => {
         const { nombre, apellido, telefono, departamento, rol, activo } = req.body;
 
         const { data: updatedUser, error } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .update({
                 nombre,
                 apellido,
@@ -147,7 +147,7 @@ router.delete('/:id', async (req, res) => {
         const { id } = req.params;
 
         const { error } = await supabase
-            .from('ge_usuarios')
+            .from('usuarios')
             .delete()
             .eq('id', id);
 

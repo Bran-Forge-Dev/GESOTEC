@@ -6,10 +6,10 @@ const supabase = require('../config/supabase');
 router.get('/', async (req, res) => {
     try {
         const { data: problemas, error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .select(`
                 *,
-                creador:ge_usuarios (nombre, apellido)
+                creador:usuarios (nombre, apellido)
             `)
             .order('fecha_creacion', { ascending: false });
 
@@ -32,10 +32,10 @@ router.get('/:id', async (req, res) => {
         const { id } = req.params;
 
         const { data: problema, error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .select(`
                 *,
-                creador:ge_usuarios (nombre, apellido)
+                creador:usuarios (nombre, apellido)
             `)
             .eq('id', id)
             .single();
@@ -58,7 +58,7 @@ router.get('/buscar/:termino', async (req, res) => {
         const { termino } = req.params;
 
         const { data: problemas, error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .select('*')
             .or(`titulo.ilike.%${termino}%,descripcion.ilike.%${termino}%,categoria.ilike.%${termino}%,solucion.ilike.%${termino}%`)
             .order('fecha_creacion', { ascending: false });
@@ -87,7 +87,7 @@ router.post('/', async (req, res) => {
         }
 
         const { data: newProblema, error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .insert({
                 titulo,
                 descripcion,
@@ -124,7 +124,7 @@ router.put('/:id', async (req, res) => {
 
         // Verificar que el problema existe
         const { data: existingProblema, error: checkError } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .select('*')
             .eq('id', id)
             .single();
@@ -144,7 +144,7 @@ router.put('/:id', async (req, res) => {
         updateData.fecha_actualizacion = new Date().toISOString();
 
         const { data: updatedProblema, error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .update(updateData)
             .eq('id', id)
             .select()
@@ -173,7 +173,7 @@ router.delete('/:id', async (req, res) => {
 
         // Verificar que el problema existe
         const { data: existingProblema, error: checkError } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .select('*')
             .eq('id', id)
             .single();
@@ -183,7 +183,7 @@ router.delete('/:id', async (req, res) => {
         }
 
         const { error } = await supabase
-            .from('ge_base_conocimiento')
+            .from('base_conocimiento')
             .delete()
             .eq('id', id);
 

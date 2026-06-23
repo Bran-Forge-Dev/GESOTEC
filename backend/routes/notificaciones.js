@@ -25,7 +25,7 @@ router.get('/usuario/:usuario_id', async (req, res) => {
         const supabase = getSupabaseClient();
         
         const { data, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .select('*')
             .eq('usuario_id', usuario_id)
             .order('fecha_creacion', { ascending: false })
@@ -50,7 +50,7 @@ router.get('/usuario/:usuario_id/no-leidas', async (req, res) => {
         const supabase = getSupabaseClient();
         
         const { data, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .select('*')
             .eq('usuario_id', usuario_id)
             .eq('leida', false)
@@ -75,7 +75,7 @@ router.get('/usuario/:usuario_id/contador', async (req, res) => {
         const supabase = getSupabaseClient();
         
         const { count, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .select('*', { count: 'exact', head: true })
             .eq('usuario_id', usuario_id)
             .eq('leida', false);
@@ -103,7 +103,7 @@ router.post('/', async (req, res) => {
         }
 
         const { data, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .insert([
                 {
                     usuario_id,
@@ -136,7 +136,7 @@ router.put('/:id/marcar-leida', async (req, res) => {
         const supabase = getSupabaseClient();
 
         const { data, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .update({ leida: true })
             .eq('id', id)
             .select();
@@ -164,7 +164,7 @@ router.put('/usuario/:usuario_id/marcar-todas-leidas', async (req, res) => {
         const supabase = getSupabaseClient();
 
         const { data, error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .update({ leida: true })
             .eq('usuario_id', usuario_id)
             .eq('leida', false)
@@ -189,7 +189,7 @@ router.delete('/:id', async (req, res) => {
         const supabase = getSupabaseClient();
 
         const { error } = await supabase
-            .from('ge_notificaciones')
+            .from('notificaciones')
             .delete()
             .eq('id', id);
 
