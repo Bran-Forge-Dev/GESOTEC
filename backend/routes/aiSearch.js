@@ -134,7 +134,7 @@ router.post('/buscar', async (req, res) => {
       .slice(0, limite);
     
     // Filtrar resultados con muy baja similitud
-    const resultadosFiltrados = resultados.filter(r => r.similitud > 0.3);
+    const resultadosFiltrados = resultados.filter(r => r.similitud > 0.7);
     
     console.log(`✅ Se encontraron ${resultadosFiltrados.length} soluciones relevantes`);
     
