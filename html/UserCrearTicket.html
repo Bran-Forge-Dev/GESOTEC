@@ -22,7 +22,19 @@
             <aside class="sidebar">
                 <nav class="sidebar-nav">
                     <a href="UserPerfil.html" class="nav-item">
-                        🏠 Panel de Control
+                        <span class="nav-icon">🏠</span> Panel de Control
+                    </a>
+                    <a href="UserCrearTicket.html" class="nav-item active">
+                        <span class="nav-icon">➕</span> Crear Ticket
+                    </a>
+                    <a href="UserBaseConocimiento.html" class="nav-item">
+                        <span class="nav-icon">📚</span> Base de Conocimiento
+                    </a>
+                    <a href="UserVerPerfil.html" class="nav-item">
+                        <span class="nav-icon">👤</span> Ver Perfil
+                    </a>
+                    <a href="UserHistorialTickets.html" class="nav-item">
+                        <span class="nav-icon">🕙</span> Historial de Tickets
                     </a>
                 </nav>
                 <div class="sidebar-footer">
@@ -38,6 +50,18 @@
 
             <main class="main-content">
                 <h2 class="form-title">Crear Nuevo Ticket de Soporte</h2>
+
+                <!-- Área de sugerencias de IA -->
+                <div id="aiSuggestions" class="ai-suggestions hidden">
+                    <div class="ai-header">
+                        <span class="ai-icon">🤖</span>
+                        <h3>Soluciones sugeridas por IA</h3>
+                        <button class="ai-close" onclick="cerrarSugerencias()">✕</button>
+                    </div>
+                    <div id="aiSuggestionsContent" class="ai-content">
+                        <!-- Las sugerencias se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
 
                 <form id="ticketForm" class="ticket-form-container">
                     <div class="form-group">
