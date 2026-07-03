@@ -47,12 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const data = await response.json();
-            console.log('Respuesta del backend:', data);
 
             if (response.ok && data.resultados && data.resultados.length > 0) {
                 mostrarSugerencias(data.resultados);
             } else {
-                console.log('No se encontraron resultados o error en respuesta:', data);
                 ocultarSugerencias();
             }
         } catch (error) {

@@ -125,7 +125,6 @@ router.post('/buscar', async (req, res) => {
       })
       .map(entrada => {
         const similitud = similitudCoseno(embeddingConsulta, entrada.embedding);
-        console.log(`   Similitud con "${entrada.titulo}": ${similitud.toFixed(3)}`);
         return {
           ...entrada,
           similitud: similitud
@@ -135,7 +134,7 @@ router.post('/buscar', async (req, res) => {
       .slice(0, limite);
     
     // Filtrar resultados con muy baja similitud
-    const resultadosFiltrados = resultados.filter(r => r.similitud > 0.1);
+    const resultadosFiltrados = resultados.filter(r => r.similitud > 0.4);
     
     console.log(`✅ Se encontraron ${resultadosFiltrados.length} soluciones relevantes`);
     
