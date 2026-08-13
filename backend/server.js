@@ -42,9 +42,14 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'GESOTEC Backend funcionando' });
 });
 
-// Ruta raíz simple
+// Servir index.html para la ruta raíz
 app.get('/', (req, res) => {
-    res.json({ message: 'GESOTEC API Server', version: '1.0.0' });
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+// Catch-all para SPA (Single Page Application)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 // Manejo de errores
